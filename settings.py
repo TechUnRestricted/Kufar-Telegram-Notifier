@@ -1,4 +1,6 @@
 class TelegramAPI:
     # Токен бота Telegram
-    token = "_"
-    list = []
+    token = ""
+
+    element_max_length = 50
+    list_parse = []

@@ -1,5 +1,6 @@
-import Telegram
+import kufar
+from regions import *
+import telegram
 
-var = Telegram.loop_updates_handler()
-
-
+#var = telegram.loop_updates_handler()
+var = kufar.loop_updates_handler()
