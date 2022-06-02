@@ -15,26 +15,30 @@
 using namespace std;
 using namespace Kufar;
 
-
-
 int main() {
     Query query;
     query.tag = "iPhone";
-    query.priceMax = 80000;
+    query.priceMax = 80 * 100;
     query.priceMin = 0;
-    query.onlyTitleSearch = true;
     
+    query.onlyTitleSearch = true;
     Configuration configuration;
     configuration.limit = 5;
     configuration.language = "ru";
+    configuration.region = Region::Minsk;
+
+    configuration.areas = {
+        (int)Areas::Minsk::Pervomajskij,
+        (int)Areas::Minsk::Moskovskij
+    };
     
     configuration
         .queries
         .push_back(query);
     
-    auto x = getAds(configuration);
-    cout << sizeof(x) << endl;
-    //configuration.queries.push_back(const_reference __x)
-    //getAds(Configuration configuration)
+    
+    
+    auto adverts = getAds(configuration);
+    
     return 0;
 }
