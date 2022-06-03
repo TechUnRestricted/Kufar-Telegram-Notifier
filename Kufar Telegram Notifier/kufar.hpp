@@ -275,30 +275,31 @@ namespace Kufar {
         
         json ads = json::parse(rawJson).at("ads");
 
-        for (int i = 0; i < ads.size(); i++){
+        for (const auto &ad : ads){
             Ad advert;
             
             advert.tag = configuration.tag;
-            advert.title = ads[i].at("subject");
-            advert.id = ads[i].at("ad_id");
-            advert.date = zuluToTimestamp((string)ads[i].at("list_time"));
-            advert.price = stoi((string)ads[i].at("price_byn"));
-            advert.phoneNumberIsVisible = !ads[i].at("phone_hidden");
+            advert.title = ad.at("subject");
+            advert.id = ad.at("ad_id");
+            advert.date = zuluToTimestamp((string)ad.at("list_time"));
+            advert.price = stoi((string)ad.at("price_byn"));
+            advert.phoneNumberIsVisible = !ad.at("phone_hidden");
             
-            json accountParameters = ads[i].at("account_parameters");
-            for (int i = 0; i < accountParameters.size(); i++){
-                if (accountParameters[i].at("p") == "name"){
-                    advert.sellerName = accountParameters[i].at("v");
+            json accountParameters = ad.at("account_parameters");
+            for (const auto &accountParameter : accountParameters){
+                if (accountParameter.at("p") == "name"){
+                    advert.sellerName = accountParameter.at("v");
                     break;
                 }
             }
             
-            json imagesArray = ads[i].at("images");
-            for (int i = 0; i < imagesArray.size(); i++){
-                string imageID = imagesArray[i].at("id");
-                bool isYams = imagesArray[i].at("yams_storage");
+            json imagesArray = ad.at("images");
+            for (const auto &image : imagesArray){
+                string imageID = image.at("id");
+                bool isYams = image.at("yams_storage");
                 insertImageURL(advert.images, imageID, isYams);
             }
+            
             adverts.push_back(advert);
         }
         

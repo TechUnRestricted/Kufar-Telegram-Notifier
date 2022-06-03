@@ -25,18 +25,21 @@ bool vectorContains(const vector<int> &vector, const int &value) {
 struct ProgramConfiguration {
     vector<KufarConfiguration> requestConfiguration;
 
-    int queryDelaySeconds = 10;
+    int queryDelaySeconds = 5;
     int loopDelaySeconds = 30;
 };
 
 
 int main() {
+    ProgramConfiguration programConfiguration;
+
+    {
     KufarConfiguration kufarConfiguration;
     
     kufarConfiguration.limit = 5;
     kufarConfiguration.language = "ru";
     kufarConfiguration.region = Region::Minsk;
-    kufarConfiguration.tag = "Носок";
+    kufarConfiguration.tag = "iPhone";
     kufarConfiguration.priceMax = 80 * 100;
     kufarConfiguration.priceMin = 0;
     kufarConfiguration.onlyTitleSearch = false;
@@ -46,20 +49,27 @@ int main() {
         (int)Areas::Minsk::Moskovskij
     };
     
-    ProgramConfiguration programConfiguration;
     programConfiguration.requestConfiguration.push_back(kufarConfiguration);
+    kufarConfiguration.tag = "iPad";
+    programConfiguration.requestConfiguration.push_back(kufarConfiguration);
+        
+    }
     
     vector<int> viewedAds;
     while (true) {
-        auto adverts = getAds(kufarConfiguration);
-        for (auto advert : adverts){
-            if (!vectorContains(viewedAds, advert.id)){
-                viewedAds.push_back(advert.id);
-            } else {
-                cout << "[Already was!]" << endl;
+
+        for (auto requestConfiguration : programConfiguration.requestConfiguration){
+            for (const auto &advert : getAds(requestConfiguration)){
+                if (!vectorContains(viewedAds, advert.id)){
+                   viewedAds.push_back(advert.id);
+                } else {
+                    cout << "[Already was!]" << endl;
+                }
             }
+            sleep(programConfiguration.queryDelaySeconds);
         }
         sleep(programConfiguration.loopDelaySeconds);
+       // sleep(programConfiguration.loopDelaySeconds);
     }
     return 0;
 }
