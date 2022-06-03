@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <unistd.h>
+#include <vector>
 
 //#include "json.hpp"
 #include "networking.hpp"
@@ -78,6 +79,5 @@ int main() {
         cout << "[DEBUG]: " << "(LoopDelay) Sleeping for: " << programConfiguration.loopDelaySeconds << "s." << endl;
         sleep(programConfiguration.loopDelaySeconds);
     }
-    
     return 0;
 }
