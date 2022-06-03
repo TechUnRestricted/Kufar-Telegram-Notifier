@@ -250,62 +250,58 @@ namespace Kufar {
         };
     };
 
-    struct Query {
+    struct KufarConfiguration {
         string tag;
         bool onlyTitleSearch = true;
         optional<int> priceMin;
         optional<int> priceMax;
-    };
-
-    struct Configuration {
-        vector<Query> queries;
+        
         string language;
         int limit;
         Kufar::Region region;
         vector<int> areas;
     };
     
-    vector<Ad> getAds(const Configuration &configuration){
+    vector<Ad> getAds(const KufarConfiguration &configuration){
         vector<Ad> adverts;
-        for (int i = 0; i < configuration.queries.size(); i++){
-            string rawJson = getJSONFromURL(
-                                            baseURL +
-                                            "lang=" + configuration.language + "&"
-                                            "query=" + urlEncode(configuration.queries[i].tag) + "&"
-                                            "ot=" + to_string(configuration.queries[i].onlyTitleSearch) + "&"
-                                            "size=" + to_string(configuration.limit) + "&"
-                                            "ar=v.or:" + joinIntVector(configuration.areas, ",") + "&rgn=" + to_string((int)configuration.region)
-            );
+        string rawJson = getJSONFromURL(
+                                        baseURL +
+                                        "lang=" + configuration.language + "&"
+                                        "query=" + urlEncode(configuration.tag) + "&"
+                                        "ot=" + to_string(configuration.onlyTitleSearch) + "&"
+                                        "size=" + to_string(configuration.limit) + "&"
+                                        "ar=v.or:" + joinIntVector(configuration.areas, ",") + "&rgn=" + to_string((int)configuration.region)
+        );
+        
+        json ads = json::parse(rawJson).at("ads");
+
+        for (int i = 0; i < ads.size(); i++){
+            Ad advert;
             
-            json ads = json::parse(rawJson).at("ads");
-            cout << ads.size() << endl;
-            for (int i = 0; i < ads.size(); i++){
-                Ad advert;
-                
-                advert.tag = configuration.queries[i].tag;
-                advert.title = ads[i].at("subject");
-                advert.id = ads[i].at("ad_id");
-                advert.date = zuluToTimestamp((string)ads[i].at("list_time"));
-                advert.price = stoi((string)ads[i].at("price_byn"));
-                advert.phoneNumberIsVisible = !ads[i].at("phone_hidden");
-                
-                json accountParameters = ads[i].at("account_parameters");
-                for (int i = 0; i < accountParameters.size(); i++){
-                    if (accountParameters[i].at("p") == "name"){
-                        advert.sellerName = accountParameters[i].at("v");
-                        break;
-                    }
+            advert.tag = configuration.tag;
+            advert.title = ads[i].at("subject");
+            advert.id = ads[i].at("ad_id");
+            advert.date = zuluToTimestamp((string)ads[i].at("list_time"));
+            advert.price = stoi((string)ads[i].at("price_byn"));
+            advert.phoneNumberIsVisible = !ads[i].at("phone_hidden");
+            
+            json accountParameters = ads[i].at("account_parameters");
+            for (int i = 0; i < accountParameters.size(); i++){
+                if (accountParameters[i].at("p") == "name"){
+                    advert.sellerName = accountParameters[i].at("v");
+                    break;
                 }
-                
-                json imagesArray = ads[i].at("images");
-                for (int i = 0; i < imagesArray.size(); i++){
-                    string imageID = imagesArray[i].at("id");
-                    bool isYams = imagesArray[i].at("yams_storage");
-                    insertImageURL(advert.images, imageID, isYams);
-                }
-                adverts.push_back(advert);
             }
+            
+            json imagesArray = ads[i].at("images");
+            for (int i = 0; i < imagesArray.size(); i++){
+                string imageID = imagesArray[i].at("id");
+                bool isYams = imagesArray[i].at("yams_storage");
+                insertImageURL(advert.images, imageID, isYams);
+            }
+            adverts.push_back(advert);
         }
+        
         
         return adverts;
     }

@@ -15,30 +15,51 @@
 using namespace std;
 using namespace Kufar;
 
-int main() {
-    Query query;
-    query.tag = "iPhone";
-    query.priceMax = 80 * 100;
-    query.priceMin = 0;
-    
-    query.onlyTitleSearch = true;
-    Configuration configuration;
-    configuration.limit = 5;
-    configuration.language = "ru";
-    configuration.region = Region::Minsk;
+bool vectorContains(const vector<int> &vector, const int &value) {
+    if (find(vector.begin(), vector.end(), value) != vector.end()){
+        return true;
+    }
+    return false;
+}
 
-    configuration.areas = {
+struct ProgramConfiguration {
+    vector<KufarConfiguration> requestConfiguration;
+
+    int queryDelaySeconds = 10;
+    int loopDelaySeconds = 30;
+};
+
+
+int main() {
+    KufarConfiguration kufarConfiguration;
+    
+    kufarConfiguration.limit = 5;
+    kufarConfiguration.language = "ru";
+    kufarConfiguration.region = Region::Minsk;
+    kufarConfiguration.tag = "Носок";
+    kufarConfiguration.priceMax = 80 * 100;
+    kufarConfiguration.priceMin = 0;
+    kufarConfiguration.onlyTitleSearch = false;
+    
+    kufarConfiguration.areas = {
         (int)Areas::Minsk::Pervomajskij,
         (int)Areas::Minsk::Moskovskij
     };
     
-    configuration
-        .queries
-        .push_back(query);
+    ProgramConfiguration programConfiguration;
+    programConfiguration.requestConfiguration.push_back(kufarConfiguration);
     
-    
-    
-    auto adverts = getAds(configuration);
-    
+    vector<int> viewedAds;
+    while (true) {
+        auto adverts = getAds(kufarConfiguration);
+        for (auto advert : adverts){
+            if (!vectorContains(viewedAds, advert.id)){
+                viewedAds.push_back(advert.id);
+            } else {
+                cout << "[Already was!]" << endl;
+            }
+        }
+        sleep(programConfiguration.loopDelaySeconds);
+    }
     return 0;
 }
