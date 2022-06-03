@@ -8,10 +8,11 @@
 #ifndef kufar_hpp
 #define kufar_hpp
 
+#include "json.hpp"
 #include <iostream>
 
-
 namespace Kufar {
+
     using namespace std;
     using namespace Networking;
     using nlohmann::json;
@@ -284,6 +285,7 @@ namespace Kufar {
             advert.date = zuluToTimestamp((string)ad.at("list_time"));
             advert.price = stoi((string)ad.at("price_byn"));
             advert.phoneNumberIsVisible = !ad.at("phone_hidden");
+            advert.link = ad.at("ad_link");
             
             json accountParameters = ad.at("account_parameters");
             for (const auto &accountParameter : accountParameters){

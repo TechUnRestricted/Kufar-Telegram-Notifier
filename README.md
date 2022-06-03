@@ -6,6 +6,7 @@
 <img src="https://i.imgur.com/bBGWp5I.png" width="600px"/>
 </p>
 
+<!---
 Для функционирования скрипта вам необходимо произвести ввод настроек конфигурации:
 <ul>
 <li>Telegram Bot API Token</li>
@@ -13,7 +14,7 @@
 <li>Настройки Kufar</li>
 <li>MariaDB / MySQL</li>
 </ul>
-
+-->
 <p align="center">
 <img src="https://i.imgur.com/xWWziEC.png"/>
 </p>
