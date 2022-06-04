@@ -30,7 +30,7 @@ namespace Networking {
 
     string getJSONFromURL(const string &url){
         //curl_global_init(CURL_GLOBAL_DEFAULT);
-        std::cout << "[URL: " << url << "]" << std::endl;
+        //std::cout << "[URL: " << url << "]" << std::endl;
         
         auto curl = curl_easy_init();
         string responseString;

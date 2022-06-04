@@ -35,6 +35,7 @@
 		E266078B284AC80C0045D269 /* telegram.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = telegram.cpp; sourceTree = "<group>"; };
 		E266078D284AC89C0045D269 /* kufar.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = kufar.cpp; sourceTree = "<group>"; };
 		E266078F284ACA1E0045D269 /* networking.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = networking.cpp; sourceTree = "<group>"; };
+		E26607A4284BDA7A0045D269 /* helperfunctions.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = helperfunctions.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +76,7 @@
 				E23ECD722849390700045195 /* json.hpp */,
 				E23ECD732849392A00045195 /* networking.hpp */,
 				E266078F284ACA1E0045D269 /* networking.cpp */,
+				E26607A4284BDA7A0045D269 /* helperfunctions.hpp */,
 			);
 			path = "Kufar Telegram Notifier";
 			sourceTree = "<group>";

@@ -11,22 +11,17 @@
 #include <vector>
 
 #include "json.hpp"
-
 #include "networking.hpp"
 #include "kufar.hpp"
 #include "telegram.hpp"
+#include "helperfunctions.hpp"
 
 using namespace std;
 using namespace Kufar;
 using namespace Telegram;
 using nlohmann::json;
 
-bool vectorContains(const vector<int> &vector, const int &value) {
-    if (find(vector.begin(), vector.end(), value) != vector.end()){
-        return true;
-    }
-    return false;
-}
+
 
 struct ProgramConfiguration {
     vector<KufarConfiguration> kufarConfiguration;
@@ -35,17 +30,6 @@ struct ProgramConfiguration {
     int queryDelaySeconds = 5;
     int loopDelaySeconds = 30;
 };
-
-string getTextFromFile(const string &path){
-    /**
-     Чтение файла и возврат
-     содержимого в виде string.
-     */
-    
-    ifstream ifs(path);
-    return string((istreambuf_iterator<char>(ifs)),
-                  (istreambuf_iterator<char>()));
-}
 
 void loadJSONConfigurationData(const json &data, ProgramConfiguration &programConfiguration){
     {
@@ -81,21 +65,21 @@ void loadJSONConfigurationData(const json &data, ProgramConfiguration &programCo
 void printJSONConfigurationData(const ProgramConfiguration &programConfiguration){
     cout <<
     "- Telegram:\n"
-    "   - Token: " << programConfiguration.telegramConfiguration.botToken << "\n"
-    "   - Chat ID: " << programConfiguration.telegramConfiguration.chatID_or_Username << "\n\n"
+        "\t- Token: " << programConfiguration.telegramConfiguration.botToken << "\n"
+        "\t- Chat ID: " << programConfiguration.telegramConfiguration.chatID_or_Username << "\n\n"
     "- Queries:\n\n";
     
     for (const auto &query : programConfiguration.kufarConfiguration){
         cout <<
-        "   - Tag: " << query.tag << "\n"
-        "   - Only Title Search: " << query.onlyTitleSearch << "\n"
-        "   - Price:\n"
-        "       - Min: " << query.priceMin.value() << "\n"
-        "       - Max: " << query.priceMax.value() << "\n"
-        "   - Language: " << query.language << "\n"
-        "   - Limit: " << query.limit << "\n"
-        "   - Region: " << (int)query.region << "\n"
-        "   - Areas: ";
+        "\t- Tag: " << query.tag << "\n"
+        "\t- Only Title Search: " << query.onlyTitleSearch << "\n"
+        "\t- Price:\n"
+            "\t\t- Min: " << query.priceMin.value() << "\n"
+            "\t\t- Max: " << query.priceMax.value() << "\n"
+        "\t- Language: " << query.language << "\n"
+        "\t- Limit: " << query.limit << "\n"
+        "\t- Region: " << (int)query.region << "\n"
+        "\t- Areas: ";
         
         for (const auto &area : query.areas){
             cout << area << ' ';
@@ -106,11 +90,16 @@ void printJSONConfigurationData(const ProgramConfiguration &programConfiguration
     cout <<
     "- Delays:\n"
     "   - Query: " << programConfiguration.queryDelaySeconds << "\n"
-    "   - Loop: " << programConfiguration.loopDelaySeconds << "\n";
+    "   - Loop: " << programConfiguration.loopDelaySeconds << endl;
 }
 
-int main() {
-    string JSONPath = "/Users/macintosh/kufar-settings.json";
+int main(int argc, char *argv[]) {
+    if (argc < 2){
+        cerr << "[ERROR]: No JSON file path passed!" << endl;
+        exit(1);
+    }
+    
+    string JSONPath = argv[1];
     cout << "[Loading configuration]: " << '"' << JSONPath << '"' << endl;
     
     ProgramConfiguration programConfiguration;
@@ -139,10 +128,10 @@ int main() {
             } catch (const exception &exc) {
                 cerr << "[ERROR (getAds)]: " << exc.what() << endl;
             }
-            cout << "[DEBUG]: " << "(QueryDelay) Sleeping for: " << programConfiguration.queryDelaySeconds << "s." << endl;
+            DEBUG_MSG("[DEBUG]: " << "(QueryDelay) Sleeping for: " << programConfiguration.queryDelaySeconds << "s." << endl);
             sleep(programConfiguration.queryDelaySeconds);
         }
-        cout << "[DEBUG]: " << "(LoopDelay) Sleeping for: " << programConfiguration.loopDelaySeconds << "s." << endl;
+        DEBUG_MSG("[DEBUG]: " << "(LoopDelay) Sleeping for: " << programConfiguration.loopDelaySeconds << "s." << endl);
         sleep(programConfiguration.loopDelaySeconds);
     }
     return 0;
