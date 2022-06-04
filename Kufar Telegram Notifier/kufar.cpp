@@ -8,7 +8,7 @@
 #include "json.hpp"
 #include "kufar.hpp"
 #include "networking.hpp"
-
+#include "helperfunctions.hpp"
 #include <iostream>
 
 namespace Kufar {
@@ -18,57 +18,12 @@ namespace Kufar {
     using nlohmann::json;
 
     const string baseURL = "https://searchapi.kufar.by/v1/search/rendered-paginated?";
-    
-    namespace {
-        static const string PROPERTY_UNDEFINED = "[UNDEFINED]";
-        
-        template<typename T>
-        optional<T> get_at_optional(const json &obj, const string &key) try {
-            return obj.at(key).get<T>();
-        } catch (...) {
-            return nullopt;
-        }
-        
-        template<typename T>
-        ostream &operator << (ostream &os, optional<T> const &opt){
-            return opt ? (os << opt.value()) : (os << PROPERTY_UNDEFINED);
-        }
-    
-        time_t zuluToTimestamp(const string &zuluDate) {
-            tm t{};
-            istringstream stringStream(zuluDate);
-            
-            stringStream >> get_time(&t, "%Y-%m-%dT%H:%M:%S");
-            if (stringStream.fail()) {
-                throw runtime_error{"failed to parse time string"};
-            }
-            
-            return mktime(&t);
-        }
-    
-        string joinIntVector(const vector<int> &nums, const string &delim) {
-            stringstream result;
-            copy(nums.begin(), nums.end(), std::ostream_iterator<int>(result, delim.c_str()));
-            
-            string temp = result.str();
-            
-            if (!temp.empty()) {
-                temp.pop_back();
-            }
-            
-            return temp;
-        }
-    };
 
     namespace {
         void insertImageURL (vector<string> &images, const string &id, const bool yams_storage) {
             if (yams_storage){
                 images.push_back("https://yams.kufar.by/api/v1/kufar-ads/images/" + id.substr(0, 2) + "/" + id + ".jpg?rule=pictures");
             }
-        }
-    
-        time_t timestampShift(const time_t &timestamp, int shift){
-            return timestamp + (3600 * shift);
         }
     }
     

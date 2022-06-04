@@ -11,6 +11,7 @@
 		E266078C284AC80C0045D269 /* telegram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E266078B284AC80C0045D269 /* telegram.cpp */; };
 		E266078E284AC89C0045D269 /* kufar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E266078D284AC89C0045D269 /* kufar.cpp */; };
 		E2660790284ACA1E0045D269 /* networking.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E266078F284ACA1E0045D269 /* networking.cpp */; };
+		E26607A6284BF5190045D269 /* helperfunctions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E26607A5284BF5190045D269 /* helperfunctions.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -36,6 +37,7 @@
 		E266078D284AC89C0045D269 /* kufar.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = kufar.cpp; sourceTree = "<group>"; };
 		E266078F284ACA1E0045D269 /* networking.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = networking.cpp; sourceTree = "<group>"; };
 		E26607A4284BDA7A0045D269 /* helperfunctions.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = helperfunctions.hpp; sourceTree = "<group>"; };
+		E26607A5284BF5190045D269 /* helperfunctions.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = helperfunctions.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +78,7 @@
 				E23ECD722849390700045195 /* json.hpp */,
 				E23ECD732849392A00045195 /* networking.hpp */,
 				E266078F284ACA1E0045D269 /* networking.cpp */,
+				E26607A5284BF5190045D269 /* helperfunctions.cpp */,
 				E26607A4284BDA7A0045D269 /* helperfunctions.hpp */,
 			);
 			path = "Kufar Telegram Notifier";
@@ -141,6 +144,7 @@
 				E266078E284AC89C0045D269 /* kufar.cpp in Sources */,
 				E266078C284AC80C0045D269 /* telegram.cpp in Sources */,
 				E23ECD6C284938E500045195 /* main.cpp in Sources */,
+				E26607A6284BF5190045D269 /* helperfunctions.cpp in Sources */,
 				E2660790284ACA1E0045D269 /* networking.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -199,7 +203,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -253,7 +257,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = "-lcurl";

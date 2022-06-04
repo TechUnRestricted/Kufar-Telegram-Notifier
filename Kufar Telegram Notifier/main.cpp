@@ -6,22 +6,20 @@
 //
 
 #include <iostream>
-#include <fstream>
 #include <unistd.h>
+#include <fstream>
 #include <vector>
 
 #include "json.hpp"
-#include "networking.hpp"
 #include "kufar.hpp"
 #include "telegram.hpp"
+#include "networking.hpp"
 #include "helperfunctions.hpp"
 
 using namespace std;
 using namespace Kufar;
 using namespace Telegram;
 using nlohmann::json;
-
-
 
 struct ProgramConfiguration {
     vector<KufarConfiguration> kufarConfiguration;
@@ -128,10 +126,10 @@ int main(int argc, char *argv[]) {
             } catch (const exception &exc) {
                 cerr << "[ERROR (getAds)]: " << exc.what() << endl;
             }
-            DEBUG_MSG("[DEBUG]: " << "(QueryDelay) Sleeping for: " << programConfiguration.queryDelaySeconds << "s." << endl);
+            DEBUG_MSG("[DEBUG]: " << "(QueryDelay) Sleeping for: " << programConfiguration.queryDelaySeconds << "s.");
             sleep(programConfiguration.queryDelaySeconds);
         }
-        DEBUG_MSG("[DEBUG]: " << "(LoopDelay) Sleeping for: " << programConfiguration.loopDelaySeconds << "s." << endl);
+        DEBUG_MSG("[DEBUG]: " << "(LoopDelay) Sleeping for: " << programConfiguration.loopDelaySeconds << "s.");
         sleep(programConfiguration.loopDelaySeconds);
     }
     return 0;
