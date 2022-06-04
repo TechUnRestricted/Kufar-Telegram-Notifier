@@ -46,10 +46,10 @@ namespace Telegram {
         
         string url = "https://api.telegram.org/bot" + telegramConfiguration.botToken;
         if (!ad.images.empty()){
-            url += "/sendMediaGroup?chat_id=" + telegramConfiguration.chatID_or_Username + "&"
+            url += "/sendMediaGroup?chat_id=" + to_string(telegramConfiguration.chatID) + "&"
                    "media=" + urlEncode(makeImageGroupJSON(ad.images, text));
         } else {
-            url += "/sendPhoto?chat_id=" + telegramConfiguration.chatID_or_Username + "&"
+            url += "/sendPhoto?chat_id=" + to_string(telegramConfiguration.chatID) + "&"
                    "caption=" + urlEncode(text) + "&"
                    "photo=https://via.placeholder.com/1080";
             /*url += "/sendMessage?chat_id=" + telegramConfiguration.chatID_or_Username + "&"

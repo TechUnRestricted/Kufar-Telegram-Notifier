@@ -35,7 +35,7 @@ void loadJSONConfigurationData(const json &data, ProgramConfiguration &programCo
     {
         json telegramData = data.at("telegram");
         programConfiguration.telegramConfiguration.botToken = telegramData.at("bot-token");
-        programConfiguration.telegramConfiguration.chatID_or_Username = telegramData.at("chat-id");
+        programConfiguration.telegramConfiguration.chatID = telegramData.at("chat-id");
     }
     {
         json queriesData = data.at("queries");
@@ -66,7 +66,7 @@ void printJSONConfigurationData(const ProgramConfiguration &programConfiguration
     cout <<
     "- Telegram:\n"
         "\t- Token: " << programConfiguration.telegramConfiguration.botToken << "\n"
-        "\t- Chat ID: " << programConfiguration.telegramConfiguration.chatID_or_Username << "\n\n"
+        "\t- Chat ID: " << programConfiguration.telegramConfiguration.chatID << "\n\n"
     "- Queries:\n\n";
     
     for (const auto &query : programConfiguration.kufarConfiguration){

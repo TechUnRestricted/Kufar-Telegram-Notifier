@@ -49,7 +49,14 @@ namespace Kufar {
         string joinIntVector(const vector<int> &nums, const string &delim) {
             stringstream result;
             copy(nums.begin(), nums.end(), std::ostream_iterator<int>(result, delim.c_str()));
-            return result.str();
+            
+            string temp = result.str();
+            
+            if (!temp.empty()) {
+                temp.pop_back();
+            }
+            
+            return temp;
         }
     };
 
