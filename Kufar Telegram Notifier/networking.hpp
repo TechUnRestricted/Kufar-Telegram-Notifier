@@ -1,18 +1,16 @@
 //
-//  networking.h
-//  FromHateToLove
+//  networking.hpp
+//  Kufar Telegram Notifier
 //
-//  Created by Macintosh on 02.06.2022.
+//  Created by Macintosh on 04.06.2022.
 //
 
 #ifndef networking_hpp
 #define networking_hpp
 
 namespace Networking {
-    using std::string;
-
-    string urlEncode(const std::string &);
-    string getJSONFromURL(const std::string &);
+    std::string urlEncode(const std::string &);
+    std::string getJSONFromURL(const std::string &);
 };
 
 #endif /* networking_hpp */

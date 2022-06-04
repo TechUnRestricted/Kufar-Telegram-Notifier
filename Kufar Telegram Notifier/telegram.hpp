@@ -9,11 +9,9 @@
 #define Header_hpp
 
 namespace Telegram {
-    using std::string;
-
     struct TelegramConfiguration {
-        string botToken;
-        string chatID_or_Username;
+        std::string botToken;
+        std::string chatID_or_Username;
     };
 
     void sendAdvert(const TelegramConfiguration &, const Kufar::Ad &);

@@ -38,15 +38,15 @@ namespace Kufar {
             tm t{};
             istringstream stringStream(zuluDate);
             
-            stringStream >> std::get_time(&t, "%Y-%m-%dT%H:%M:%S");
+            stringStream >> get_time(&t, "%Y-%m-%dT%H:%M:%S");
             if (stringStream.fail()) {
-                throw std::runtime_error{"failed to parse time string"};
+                throw runtime_error{"failed to parse time string"};
             }
             
             return mktime(&t);
         }
     
-        string joinIntVector(const vector<int> &nums, const string &delim){
+        string joinIntVector(const vector<int> &nums, const string &delim) {
             stringstream result;
             copy(nums.begin(), nums.end(), std::ostream_iterator<int>(result, delim.c_str()));
             return result.str();
@@ -54,7 +54,7 @@ namespace Kufar {
     };
 
     namespace {
-        void insertImageURL (vector<string> &images, const string &id, const bool yams_storage){
+        void insertImageURL (vector<string> &images, const string &id, const bool yams_storage) {
             if (yams_storage){
                 images.push_back("https://yams.kufar.by/api/v1/kufar-ads/images/" + id.substr(0, 2) + "/" + id + ".jpg?rule=pictures");
             }

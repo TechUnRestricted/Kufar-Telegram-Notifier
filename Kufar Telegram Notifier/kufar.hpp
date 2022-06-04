@@ -12,11 +12,6 @@
 #include <optional>
 
 namespace Kufar {
-
-    using std::string,
-          std::optional,
-          std::vector;
-
     enum class Region {
         Brest = 1,
         Gomel = 2,
@@ -194,30 +189,30 @@ namespace Kufar {
     };
 
     struct Ad {
-        string tag;
-        string title;
+        std::string tag;
+        std::string title;
         int id;
         time_t date;
         int price;
-        string sellerName;
+        std::string sellerName;
         bool phoneNumberIsVisible;
-        string link;
-        vector<string> images;
+        std::string link;
+        std::vector<std::string> images;
     };
 
     struct KufarConfiguration {
-        string tag;
+        std::string tag;
         bool onlyTitleSearch = true;
-        optional<int> priceMin;
-        optional<int> priceMax;
+        std::optional<int> priceMin;
+        std::optional<int> priceMax;
         
-        string language;
+        std::string language;
         int limit;
         Region region;
-        vector<int> areas;
+        std::vector<int> areas;
     };
     
-    vector<Ad> getAds(const KufarConfiguration &);
+    std::vector<Ad> getAds(const KufarConfiguration &);
 
 };
 
