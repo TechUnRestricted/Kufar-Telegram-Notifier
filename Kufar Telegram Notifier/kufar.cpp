@@ -59,6 +59,10 @@ namespace Kufar {
                 images.push_back("https://yams.kufar.by/api/v1/kufar-ads/images/" + id.substr(0, 2) + "/" + id + ".jpg?rule=pictures");
             }
         }
+    
+        time_t timestampShift(const time_t &timestamp, int shift){
+            return timestamp + (3600 * shift);
+        }
     }
     
     vector<Ad> getAds(const KufarConfiguration &configuration){
@@ -80,7 +84,7 @@ namespace Kufar {
             advert.tag = configuration.tag;
             advert.title = ad.at("subject");
             advert.id = ad.at("ad_id");
-            advert.date = zuluToTimestamp((string)ad.at("list_time"));
+            advert.date = timestampShift(zuluToTimestamp((string)ad.at("list_time")), 3);
             advert.price = stoi((string)ad.at("price_byn"));
             advert.phoneNumberIsVisible = !ad.at("phone_hidden");
             advert.link = ad.at("ad_link");

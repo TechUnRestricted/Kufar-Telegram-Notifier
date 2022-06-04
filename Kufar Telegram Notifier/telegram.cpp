@@ -24,6 +24,7 @@ namespace Telegram {
                     {"type", "photo"},
                     {"media", images[i]}
             });
+            
             if (i == 0) {
                 j_list.push_back({"caption", caption});
             }
@@ -35,18 +36,25 @@ namespace Telegram {
 
     void sendAdvert(const TelegramConfiguration &telegramConfiguration, const Kufar::Ad &ad) {
         string text =
-        "#" + ad.tag + "\n"
-        "Title: " + ad.title + "\n"
-        "Date: " + std::to_string(ad.date) + "\n"
-        "Price: " + std::to_string(ad.price / 100) + " BYN\n"
-        "Seller Name: " + ad.sellerName + "\n"
-        "Phone number is visible: " + (ad.phoneNumberIsVisible ? "Yes" : "No") + "\n"
-        "Link: " + ad.link;
+            "#" + ad.tag + "\n"
+            "Title: " + ad.title + "\n"
+            "Date: " + ctime(&ad.date) + "\n"
+            "Price: " + to_string(ad.price / 100) + " BYN\n"
+            "Seller Name: " + ad.sellerName + "\n"
+            "Phone number is visible: " + (ad.phoneNumberIsVisible ? "Yes" : "No") + "\n"
+            "Link: " + ad.link;
         
-        string url = "https://api.telegram.org/bot" +
-                     telegramConfiguration.botToken +
-                     "/sendMediaGroup?chat_id=" + telegramConfiguration.chatID_or_Username + "&"
-                     "media=" + urlEncode(makeImageGroupJSON(ad.images, text));
+        string url = "https://api.telegram.org/bot" + telegramConfiguration.botToken;
+        if (!ad.images.empty()){
+            url += "/sendMediaGroup?chat_id=" + telegramConfiguration.chatID_or_Username + "&"
+                   "media=" + urlEncode(makeImageGroupJSON(ad.images, text));
+        } else {
+            url += "/sendPhoto?chat_id=" + telegramConfiguration.chatID_or_Username + "&"
+                   "caption=" + urlEncode(text) + "&"
+                   "photo=https://via.placeholder.com/1080";
+            /*url += "/sendMessage?chat_id=" + telegramConfiguration.chatID_or_Username + "&"
+                   "text=" + urlEncode("[No Photo]\n\n" + text);*/
+        }
         
         getJSONFromURL(url);
     }

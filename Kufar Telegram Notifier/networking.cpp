@@ -38,8 +38,9 @@ namespace Networking {
         if (curl) {
             curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
             curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 1L);
-            curl_easy_setopt(curl, CURLOPT_MAXREDIRS, 50L);
+            curl_easy_setopt(curl, CURLOPT_MAXREDIRS, 0L);
             curl_easy_setopt(curl, CURLOPT_TCP_KEEPALIVE, 1L);
+            curl_easy_setopt(curl, CURLOPT_TIMEOUT, 10);
             
             string headerString;
             curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writeFunction);
