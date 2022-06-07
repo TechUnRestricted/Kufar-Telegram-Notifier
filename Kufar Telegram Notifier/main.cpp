@@ -43,8 +43,8 @@ void loadJSONConfigurationData(const json &data, ProgramConfiguration &programCo
             kufarConfiguration.onlyTitleSearch = query.at("only-title-search");
             
             json queryPriceData = query.at("price");
-            kufarConfiguration.priceMin = queryPriceData.at("min");
-            kufarConfiguration.priceMax = queryPriceData.at("max");
+            kufarConfiguration.priceRange.priceMin = queryPriceData.at("min");
+            kufarConfiguration.priceRange.priceMax = queryPriceData.at("max");
             
             kufarConfiguration.language = query.at("language");
             kufarConfiguration.limit = query.at("limit");
@@ -72,14 +72,14 @@ void printJSONConfigurationData(const ProgramConfiguration &programConfiguration
         "\t- Tag: " << query.tag << "\n"
         "\t- Only Title Search: " << query.onlyTitleSearch << "\n"
         "\t- Price:\n"
-            "\t\t- Min: " << query.priceMin.value() << "\n"
-            "\t\t- Max: " << query.priceMax.value() << "\n"
+            "\t\t- Min: " << query.priceRange.priceMin << "\n"
+            "\t\t- Max: " << query.priceRange.priceMax << "\n"
         "\t- Language: " << query.language << "\n"
         "\t- Limit: " << query.limit << "\n"
-        "\t- Region: " << (int)query.region << "\n"
+        "\t- Region: " << query.region << "\n"
         "\t- Areas: ";
         
-        for (const auto &area : query.areas){
+        for (const auto &area : *query.areas){
             cout << area << ' ';
         }
         cout << "\n\n";
@@ -91,7 +91,7 @@ void printJSONConfigurationData(const ProgramConfiguration &programConfiguration
     "   - Loop: " << programConfiguration.loopDelaySeconds << endl;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[]) {    
     if (argc < 2){
         cerr << "[ERROR]: No JSON file path passed!" << endl;
         exit(1);

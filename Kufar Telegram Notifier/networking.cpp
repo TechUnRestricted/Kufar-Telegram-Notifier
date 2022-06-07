@@ -8,6 +8,7 @@
 #include <iostream>
 #include <curl/curl.h>
 #include "networking.hpp"
+#include "helperfunctions.hpp"
 
 namespace Networking {
     using std::string;
@@ -29,9 +30,9 @@ namespace Networking {
     }
 
     string getJSONFromURL(const string &url){
-        //curl_global_init(CURL_GLOBAL_DEFAULT);
-        //std::cout << "[URL: " << url << "]" << std::endl;
+        DEBUG_MSG("[URL: " << url << "]");
         
+        //curl_global_init(CURL_GLOBAL_DEFAULT);
         auto curl = curl_easy_init();
         string responseString;
         
@@ -54,4 +55,5 @@ namespace Networking {
         }
         return responseString;
     }
+
 }

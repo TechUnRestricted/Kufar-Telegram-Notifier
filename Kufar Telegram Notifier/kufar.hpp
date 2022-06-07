@@ -200,16 +200,23 @@ namespace Kufar {
         std::vector<std::string> images;
     };
 
-    struct KufarConfiguration {
-        std::string tag;
-        bool onlyTitleSearch = true;
+    struct PriceRange {
         std::optional<int> priceMin;
         std::optional<int> priceMax;
-        
-        std::string language;
-        int limit;
-        Region region;
-        std::vector<int> areas;
+
+        std::optional<std::string> joinPrice() const;
+    };
+
+    struct KufarConfiguration {
+        std::string tag;                        // Default: [!ERROR!]
+        std::optional<bool> onlyTitleSearch;    // Default: true
+        PriceRange priceRange;                  // Default: [mixed-results]
+        //std::optional<int> priceMin;          // Default: 0 (or [undefined])
+        //std::optional<int> priceMax;          // Default: [undefined]
+        std::optional<std::string> language;    // Default: "ru"
+        std::optional<int> limit;               // Default: 10
+        std::optional<int> region;           // Default: [undefined]
+        std::optional<std::vector<int>> areas;  // Default: [undefined]
     };
     
     std::vector<Ad> getAds(const KufarConfiguration &);
