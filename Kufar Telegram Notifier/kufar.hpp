@@ -211,11 +211,9 @@ namespace Kufar {
         std::string tag;                        // Default: [!ERROR!]
         std::optional<bool> onlyTitleSearch;    // Default: true
         PriceRange priceRange;                  // Default: [mixed-results]
-        //std::optional<int> priceMin;          // Default: 0 (or [undefined])
-        //std::optional<int> priceMax;          // Default: [undefined]
         std::optional<std::string> language;    // Default: "ru"
         std::optional<int> limit;               // Default: 10
-        std::optional<int> region;           // Default: [undefined]
+        std::optional<int> region;              // Default: [undefined]
         std::optional<std::vector<int>> areas;  // Default: [undefined]
     };
     

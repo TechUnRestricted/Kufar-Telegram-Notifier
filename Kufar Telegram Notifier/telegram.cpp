@@ -35,11 +35,14 @@ namespace Telegram {
     }
 
     void sendAdvert(const TelegramConfiguration &telegramConfiguration, const Kufar::Ad &ad) {
+        string formattedTime = ctime(&ad.date);
+        formattedTime.pop_back();
+        
         string text =
             "#" + ad.tag + "\n"
             "Title: " + ad.title + "\n"
-            "Date: " + ctime(&ad.date) + "\n"
-            "Price: " + to_string(ad.price / 100) + " BYN\n"
+            "Date: " + formattedTime + "\n"
+            "Price: " + to_string(ad.price / 100) + " BYN\n\n"
             "Seller Name: " + ad.sellerName + "\n"
             "Phone number is visible: " + (ad.phoneNumberIsVisible ? "Yes" : "No") + "\n"
             "Link: " + ad.link;

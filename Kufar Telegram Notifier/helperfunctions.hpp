@@ -31,10 +31,10 @@ std::ostream &operator << (std::ostream &os, std::optional<T> const &opt){
     return opt ? (os << opt.value()) : (os << PROPERTY_UNDEFINED);
 }
 
-
 bool vectorContains(const std::vector<int> &, const int &);
 std::string getTextFromFile(const std::string &);
 time_t zuluToTimestamp(const std::string &);
 std::string joinIntVector(const std::vector<int> &, const std::string &);
 time_t timestampShift(const time_t &, int);
+
 #endif /* helperfunctions_hpp */

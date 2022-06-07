@@ -37,26 +37,41 @@ void loadJSONConfigurationData(const json &data, ProgramConfiguration &programCo
     }
     {
         json queriesData = data.at("queries");
+        
+        unsigned int index = 0;
         for (const json &query : queriesData){
             KufarConfiguration kufarConfiguration;
-            kufarConfiguration.tag = query.at("tag");
-            kufarConfiguration.onlyTitleSearch = query.at("only-title-search");
             
-            json queryPriceData = query.at("price");
-            kufarConfiguration.priceRange.priceMin = queryPriceData.at("min");
-            kufarConfiguration.priceRange.priceMax = queryPriceData.at("max");
+            if (query.contains("tag")) {
+                kufarConfiguration.tag = query.at("tag");
+            } else {
+                cout << "[CRITICAL ERROR]: Tag field is empty at [" << index << "] position." << endl;
+                exit(1);
+            }
             
-            kufarConfiguration.language = query.at("language");
-            kufarConfiguration.limit = query.at("limit");
-            kufarConfiguration.region = query.at("region");
-            kufarConfiguration.areas = (vector<int>)query.at("areas");
+            kufarConfiguration.onlyTitleSearch = get_at_optional<bool>(query, "only-title-search");
+            
+            if (query.contains("price")){
+                json queryPriceData = query.at("price");
+                kufarConfiguration.priceRange.priceMin = get_at_optional<int>(queryPriceData, "min");
+                kufarConfiguration.priceRange.priceMax = get_at_optional<int>(queryPriceData, "max");
+            }
+            
+            kufarConfiguration.language = get_at_optional<string>(query, "language");
+            kufarConfiguration.limit = get_at_optional<int>(query, "limit");
+            kufarConfiguration.region = get_at_optional<int>(query, "region");
+            kufarConfiguration.areas = get_at_optional<vector<int>>(query, "areas");
             programConfiguration.kufarConfiguration.push_back(kufarConfiguration);
+            
+            index += 1;
         }
     }
     {
-        json delaysData = data.at("delays");
-        programConfiguration.queryDelaySeconds = delaysData.at("query");
-        programConfiguration.loopDelaySeconds = delaysData.at("loop");
+        if (data.contains("delays")) {
+            json delaysData = data.at("delays");
+            programConfiguration.queryDelaySeconds = delaysData.at("query");
+            programConfiguration.loopDelaySeconds = delaysData.at("loop");
+        }
     }
 }
 
@@ -72,8 +87,8 @@ void printJSONConfigurationData(const ProgramConfiguration &programConfiguration
         "\t- Tag: " << query.tag << "\n"
         "\t- Only Title Search: " << query.onlyTitleSearch << "\n"
         "\t- Price:\n"
-            "\t\t- Min: " << query.priceRange.priceMin << "\n"
-            "\t\t- Max: " << query.priceRange.priceMax << "\n"
+            "\t\t- Min: " << query.priceRange.priceMin << " BYN\n"
+            "\t\t- Max: " << query.priceRange.priceMax << " BYN\n"
         "\t- Language: " << query.language << "\n"
         "\t- Limit: " << query.limit << "\n"
         "\t- Region: " << query.region << "\n"

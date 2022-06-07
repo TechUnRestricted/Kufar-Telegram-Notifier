@@ -21,16 +21,17 @@ namespace Kufar {
 
     optional<string> PriceRange::joinPrice() const {
         if (!priceMin.has_value() && !priceMax.has_value()) { return nullopt; }
+        
         string joinedPrice = "";
         
         if (!priceMin.has_value()) {
             joinedPrice += '0';
         } else {
-            joinedPrice += std::to_string(priceMin.value()) /*+ ','*/;
+            joinedPrice += to_string(priceMin.value() * 100);
         }
         
         if (priceMax.has_value()){
-            joinedPrice = "r:" + joinedPrice + ',' + std::to_string(priceMax.value());
+            joinedPrice = "r:" + joinedPrice + ',' + to_string(priceMax.value() * 100);
         }
         
         return joinedPrice;
@@ -71,13 +72,8 @@ namespace Kufar {
         addURLParameter(urlStream, "size", configuration.limit);
         addURLParameter(urlStream, "rgn", configuration.region);
         addURLParameter(urlStream, "prc", configuration.priceRange.joinPrice());
-        if (configuration.areas.has_value()) { addURLParameter(urlStream, "ar=v.or:", joinIntVector(configuration.areas.value(), ",")); }
-        
-        cout << configuration.priceRange.joinPrice() << endl;
-        //addURLParameter(urlStream, "prc", )
-
-        //TODO: Add missing parameters
-
+        if (configuration.areas.has_value()) { addURLParameter(urlStream, "ar", "v.or:" + joinIntVector(configuration.areas.value(), ",")); }
+            
         //auto x = urlStream.str();
         //cout << x << endl;
         string rawJson = getJSONFromURL(urlStream.str());
