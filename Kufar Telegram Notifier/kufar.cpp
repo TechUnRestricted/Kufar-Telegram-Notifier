@@ -74,8 +74,6 @@ namespace Kufar {
         addURLParameter(urlStream, "prc", configuration.priceRange.joinPrice());
         if (configuration.areas.has_value()) { addURLParameter(urlStream, "ar", "v.or:" + joinIntVector(configuration.areas.value(), ",")); }
             
-        //auto x = urlStream.str();
-        //cout << x << endl;
         string rawJson = getJSONFromURL(urlStream.str());
         
         json ads = json::parse(rawJson).at("ads");

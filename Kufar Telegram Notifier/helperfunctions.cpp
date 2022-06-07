@@ -8,6 +8,8 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
+#include <iomanip>
+#include <iterator>
 
 using namespace std;
 
@@ -19,11 +21,6 @@ bool vectorContains(const vector<int> &vector, const int &value) {
 }
 
 string getTextFromFile(const string &path){
-    /**
-     Чтение файла и возврат
-     содержимого в виде string.
-     */
-    
     ifstream ifs(path);
     return string((istreambuf_iterator<char>(ifs)),
                   (istreambuf_iterator<char>()));
