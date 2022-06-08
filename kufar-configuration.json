@@ -1,0 +1,40 @@
+{
+    "telegram":{
+        "bot-token": "1111111111:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "chat-id": 1111111111
+    },
+    "queries": [
+        {
+            "tag": "iPhone",
+            "only-title-search": true,
+            "price": {
+                "min": 0,
+                "max": 800
+            },
+            "language": "ru",
+            "limit": 10,
+            "region": 1,
+            "areas": [
+                1, 37
+            ]
+        },
+        {
+            "tag": "iPad",
+            "only-title-search": false,
+            "price": {
+                "min": 0,
+                "max": 1200
+            },
+            "language": "ru",
+            "limit": 10,
+            "region": 1,
+            "areas": [
+                1, 37
+            ]
+        }
+    ],
+    "delays": {
+        "query": 10,
+        "loop": 1800
+    }
+}
