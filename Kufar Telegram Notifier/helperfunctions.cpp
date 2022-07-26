@@ -10,6 +10,7 @@
 #include <sstream>
 #include <iomanip>
 #include <iterator>
+#include <algorithm>
 
 using namespace std;
 

@@ -3,7 +3,7 @@
 Использование данного бота предусматривается только для ознакомительных целей.<br><br>
 <pre>Если Вы являетесь администрацией Kufar и у Вас имеются претензии к данному проекту - обращайтесь в раздел «<i>Issues</i>» для обратной связи.</pre>
 <p align="center">
-   <img src="https://i.imgur.com/bBGWp5I.png" width="600px"/>
+   <img src="https://user-images.githubusercontent.com/83237609/180989226-ec24b7d5-63ea-4ed5-9830-dd40d27ee30d.png" width="600px"/>
 </p>
 <h2>Инструкция по сборке</h2>
 <details>
@@ -15,7 +15,7 @@
    <ol>
       <li>Установите g++: <code>sudo apt-get install g++</code></li>
       <li>
-         Установите curl: <code>sudo apt-get install libcurl4-gnutls-dev libcurl4-nss-dev libcurl4-openssl-dev
+         Установите curl: <code>sudo apt-get install curl libcurl4-gnutls-dev
          </code>
       </li>
       <li>
