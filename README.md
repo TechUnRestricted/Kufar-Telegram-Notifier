@@ -112,5 +112,5 @@
 <h2>Запуск:</h2>
 <code>./executable "/путь/к/kufar-configuration.json"</code>
 <p align="center">
-   <img src="https://i.imgur.com/xWWziEC.png"/>
+   <img src="https://user-images.githubusercontent.com/83237609/181288185-7f9c23b0-32bf-4a1a-a3fd-168ed38255e1.png"/>
 </p>
