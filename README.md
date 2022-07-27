@@ -88,18 +88,18 @@
          Queries
       </summary>
       <b>tag</b> - поисковой запрос.<br>
-      <b>only-title-search</b> - осуществление поиска только в заголовках.
+      <b>only-title-search</b> - осуществление поиска только в заголовках. <sup>(Опционально)</sup>
       <details>
          <summary>
-            Price
+            Price <sup>(Опционально)</sup>
          </summary>
-         <b>min</b> - минимальная цена (целочисленное значение в BYN).<br>
-         <b>max</b> - максимальная цена (целочисленное значение в BYN).
+         <b>min</b> - минимальная цена (целочисленное значение в BYN). <sup>(Опционально)</sup><br>
+         <b>max</b> - максимальная цена (целочисленное значение в BYN). <sup>(Опционально)</sup>
       </details>
-      <b>language</b> - язык.<br>
-      <b>limit</b> - ограничение на количество получаемых объявлений за один запрос.<br>
-      <b>region</b> - <a href="https://github.com/TechUnRestricted/Kufar-Telegram-Notifier/blob/af75848093db0d21959128c56176e3ad2ae9bc29/Kufar%20Telegram%20Notifier/kufar.hpp#L15">номер региона</a> для поиска объявлений.<br>
-      <b>areas</b> - <a href="https://github.com/TechUnRestricted/Kufar-Telegram-Notifier/blob/af75848093db0d21959128c56176e3ad2ae9bc29/Kufar%20Telegram%20Notifier/kufar.hpp#L25">номера областей</a> для поиска объявлений.
+      <b>language</b> - язык. <sup>(Опционально)</sup><br>
+      <b>limit</b> - ограничение на количество получаемых объявлений за один запрос. <sup>(Опционально)</sup><br>
+      <b>region</b> - <a href="https://github.com/TechUnRestricted/Kufar-Telegram-Notifier/blob/af75848093db0d21959128c56176e3ad2ae9bc29/Kufar%20Telegram%20Notifier/kufar.hpp#L15">номер региона</a> для поиска объявлений. <sup>(Опционально)</sup><br>
+      <b>areas</b> - <a href="https://github.com/TechUnRestricted/Kufar-Telegram-Notifier/blob/af75848093db0d21959128c56176e3ad2ae9bc29/Kufar%20Telegram%20Notifier/kufar.hpp#L25">номера областей</a> для поиска объявлений. <sup>(Опционально)</sup>
    </details>
    <details>
       <summary>
