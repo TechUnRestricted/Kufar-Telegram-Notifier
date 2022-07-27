@@ -210,7 +210,7 @@ namespace Kufar {
     struct KufarConfiguration {
         std::string tag;                        // Default: [!ERROR!]
         std::optional<bool> onlyTitleSearch;    // Default: true
-        PriceRange priceRange;                  // Default: [mixed-results]
+        PriceRange priceRange = PriceRange();   // Default: [mixed-results]
         std::optional<std::string> language;    // Default: "ru"
         std::optional<int> limit;               // Default: 10
         std::optional<int> region;              // Default: [undefined]
