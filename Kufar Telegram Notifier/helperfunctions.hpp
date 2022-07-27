@@ -44,7 +44,7 @@ std::optional<T> get_at_optional(const nlohmann::json &obj, const std::string &k
  */
 
 template<typename T>
-std::ostream &operator << (std::ostream &os, std::optional<T> const &opt){
+std::ostream &operator << (std::ostream &os, std::optional<T> const &opt) {
     return opt ? (os << opt.value()) : (os << PROPERTY_UNDEFINED);
 }
 

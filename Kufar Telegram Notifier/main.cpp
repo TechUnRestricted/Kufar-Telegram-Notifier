@@ -29,7 +29,7 @@ struct ProgramConfiguration {
     int loopDelaySeconds = 30;
 };
 
-void loadJSONConfigurationData(const json &data, ProgramConfiguration &programConfiguration){
+void loadJSONConfigurationData(const json &data, ProgramConfiguration &programConfiguration) {
     {
         json telegramData = data.at("telegram");
         programConfiguration.telegramConfiguration.botToken = telegramData.at("bot-token");
@@ -39,7 +39,7 @@ void loadJSONConfigurationData(const json &data, ProgramConfiguration &programCo
         json queriesData = data.at("queries");
         
         unsigned int index = 0;
-        for (const json &query : queriesData){
+        for (const json &query : queriesData) {
             KufarConfiguration kufarConfiguration;
             
             if (query.contains("tag")) {
@@ -51,7 +51,7 @@ void loadJSONConfigurationData(const json &data, ProgramConfiguration &programCo
             
             kufarConfiguration.onlyTitleSearch = get_at_optional<bool>(query, "only-title-search");
             
-            if (query.contains("price")){
+            if (query.contains("price")) {
                 json queryPriceData = query.at("price");
                 kufarConfiguration.priceRange.priceMin = get_at_optional<int>(queryPriceData, "min");
                 kufarConfiguration.priceRange.priceMax = get_at_optional<int>(queryPriceData, "max");
@@ -75,14 +75,14 @@ void loadJSONConfigurationData(const json &data, ProgramConfiguration &programCo
     }
 }
 
-void printJSONConfigurationData(const ProgramConfiguration &programConfiguration){
+void printJSONConfigurationData(const ProgramConfiguration &programConfiguration) {
     cout <<
     "- Telegram:\n"
         "\t- Token: " << programConfiguration.telegramConfiguration.botToken << "\n"
         "\t- Chat ID: " << programConfiguration.telegramConfiguration.chatID << "\n\n"
     "- Queries:\n\n";
     
-    for (const auto &query : programConfiguration.kufarConfiguration){
+    for (const auto &query : programConfiguration.kufarConfiguration) {
         cout <<
         "\t- Tag: " << query.tag << "\n"
         "\t- Only Title Search: " << query.onlyTitleSearch << "\n"
@@ -94,9 +94,14 @@ void printJSONConfigurationData(const ProgramConfiguration &programConfiguration
         "\t- Region: " << query.region << "\n"
         "\t- Areas: ";
         
-        for (const auto &area : *query.areas){
-            cout << area << ' ';
+        if (query.areas.has_value()) {
+            for (const auto &area : query.areas.value()){
+                cout << area << ' ';
+            }
+        } else {
+            cout << PROPERTY_UNDEFINED;
         }
+        
         cout << "\n\n";
     }
     
@@ -122,11 +127,11 @@ int main(int argc, char *argv[]) {
     
     vector<int> viewedAds;
     while (true) {
-        for (auto requestConfiguration : programConfiguration.kufarConfiguration){
+        for (auto requestConfiguration : programConfiguration.kufarConfiguration) {
             try {
-                for (const auto &advert : getAds(requestConfiguration)){
-                    if (!vectorContains(viewedAds, advert.id)){
-                        cout << "[New]: Adding [Title: " << advert.title << "], [ID: " << advert.id << "], [Tag: " << advert.tag << "], [Link: " <<     advert.link << "]" << endl;
+                for (const auto &advert : getAds(requestConfiguration)) {
+                    if (!vectorContains(viewedAds, advert.id)) {
+                        cout << "[New]: Adding [Title: " << advert.title << "], [ID: " << advert.id << "], [Tag: " << advert.tag << "], [Link: " << advert.link << "]" << endl;
                         viewedAds.push_back(advert.id);
                         try {
                             sendAdvert(programConfiguration.telegramConfiguration, advert);

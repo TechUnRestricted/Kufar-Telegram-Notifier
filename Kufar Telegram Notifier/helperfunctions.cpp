@@ -15,13 +15,13 @@
 using namespace std;
 
 bool vectorContains(const vector<int> &vector, const int &value) {
-    if (find(vector.begin(), vector.end(), value) != vector.end()){
+    if (find(vector.begin(), vector.end(), value) != vector.end()) {
         return true;
     }
     return false;
 }
 
-string getTextFromFile(const string &path){
+string getTextFromFile(const string &path) {
     ifstream ifs(path);
     return string((istreambuf_iterator<char>(ifs)),
                   (istreambuf_iterator<char>()));
@@ -52,6 +52,6 @@ string joinIntVector(const vector<int> &nums, const string &delim) {
     return temp;
 }
 
-time_t timestampShift(const time_t &timestamp, int shift){
+time_t timestampShift(const time_t &timestamp, int shift) {
     return timestamp + (3600 * shift);
 }

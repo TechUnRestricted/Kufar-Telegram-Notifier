@@ -18,6 +18,7 @@ namespace Kufar {
     using nlohmann::json;
 
     const string baseURL = "https://searchapi.kufar.by/v1/search/rendered-paginated?";
+    const string DEFAULT_MAX_PRICE = "1000000000";
 
     optional<string> PriceRange::joinPrice() const {
         if (!priceMin.has_value() && !priceMax.has_value()) { return nullopt; }
@@ -30,16 +31,14 @@ namespace Kufar {
             joinedPrice += to_string(priceMin.value() * 100);
         }
         
-        if (priceMax.has_value()){
-            joinedPrice = "r:" + joinedPrice + ',' + to_string(priceMax.value() * 100);
-        }
+        joinedPrice = "r:" + joinedPrice + ',' + (priceMax.has_value() ? to_string(priceMax.value() * 100) : DEFAULT_MAX_PRICE);
         
         return joinedPrice;
     }
 
     namespace {
         void insertImageURL (vector<string> &images, const string &id, const bool yams_storage) {
-            if (yams_storage){
+            if (yams_storage) {
                 images.push_back("https://yams.kufar.by/api/v1/kufar-ads/images/" + id.substr(0, 2) + "/" + id + ".jpg?rule=pictures");
             }
         }
@@ -61,7 +60,7 @@ namespace Kufar {
         }
     }
 
-    vector<Ad> getAds(const KufarConfiguration &configuration){
+    vector<Ad> getAds(const KufarConfiguration &configuration) {
         vector<Ad> adverts;
         ostringstream urlStream;
         urlStream << baseURL;
@@ -78,7 +77,7 @@ namespace Kufar {
         
         json ads = json::parse(rawJson).at("ads");
 
-        for (const auto &ad : ads){
+        for (const auto &ad : ads) {
             Ad advert;
             
             advert.tag = configuration.tag;
@@ -90,15 +89,15 @@ namespace Kufar {
             advert.link = ad.at("ad_link");
             
             json accountParameters = ad.at("account_parameters");
-            for (const auto &accountParameter : accountParameters){
-                if (accountParameter.at("p") == "name"){
+            for (const auto &accountParameter : accountParameters) {
+                if (accountParameter.at("p") == "name") {
                     advert.sellerName = accountParameter.at("v");
                     break;
                 }
             }
             
             json imagesArray = ad.at("images");
-            for (const auto &image : imagesArray){
+            for (const auto &image : imagesArray) {
                 string imageID = image.at("id");
                 bool isYams = image.at("yams_storage");
                 insertImageURL(advert.images, imageID, isYams);

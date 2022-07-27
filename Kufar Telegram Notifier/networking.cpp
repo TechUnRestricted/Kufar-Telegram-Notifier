@@ -20,7 +20,7 @@ namespace Networking {
         }
     }
 
-    string urlEncode(const string &text){
+    string urlEncode(const string &text) {
         CURL *curl = curl_easy_init();
         char *encoded = curl_easy_escape(curl, text.c_str(), 0);
         string tempVariable = encoded;
@@ -29,7 +29,7 @@ namespace Networking {
         return tempVariable;
     }
 
-    string getJSONFromURL(const string &url){
+    string getJSONFromURL(const string &url) {
         DEBUG_MSG("[URL: " << url << "]");
         
         //curl_global_init(CURL_GLOBAL_DEFAULT);

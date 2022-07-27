@@ -11,7 +11,7 @@
 namespace Telegram {
     struct TelegramConfiguration {
         std::string botToken;
-        unsigned int chatID;
+        uint64_t chatID;
     };
 
     void sendAdvert(const TelegramConfiguration &, const Kufar::Ad &);

@@ -48,7 +48,7 @@ namespace Telegram {
             "Link: " + ad.link;
         
         string url = "https://api.telegram.org/bot" + telegramConfiguration.botToken;
-        if (!ad.images.empty()){
+        if (!ad.images.empty()) {
             url += "/sendMediaGroup?chat_id=" + to_string(telegramConfiguration.chatID) + "&"
                    "media=" + urlEncode(makeImageGroupJSON(ad.images, text));
         } else {
