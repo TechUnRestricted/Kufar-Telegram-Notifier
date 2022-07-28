@@ -9,7 +9,7 @@
 <details>
    <summary>
       <h3>
-         Linux<!-- / macOS-->
+         Linux
       </h3>
    </summary>
    <ol>
@@ -98,6 +98,9 @@
       </details>
       <b>language</b> - язык. <sup>(Опционально)</sup><br>
       <b>limit</b> - ограничение на количество получаемых объявлений за один запрос. <sup>(Опционально)</sup><br>
+      <b>currency</b> - валюта <sup>(Опционально)</sup><br>
+      <b>condition</b> - <a href="https://github.com/TechUnRestricted/Kufar-Telegram-Notifier/blob/b28c0cb73b8ff958d957fe98d7018fa475d196d0/Kufar%20Telegram%20Notifier/kufar.hpp#L210">состояние</a> (новое / б/y). <sup>(Опционально)</sup><br>
+      <b>seller-type</b> - <a href="https://github.com/TechUnRestricted/Kufar-Telegram-Notifier/blob/b28c0cb73b8ff958d957fe98d7018fa475d196d0/Kufar%20Telegram%20Notifier/kufar.hpp#L215">тип продавца</a> (частное лицо / компания). <sup>(Опционально)</sup><br>
       <b>region</b> - <a href="https://github.com/TechUnRestricted/Kufar-Telegram-Notifier/blob/af75848093db0d21959128c56176e3ad2ae9bc29/Kufar%20Telegram%20Notifier/kufar.hpp#L15">номер региона</a> для поиска объявлений. <sup>(Опционально)</sup><br>
       <b>areas</b> - <a href="https://github.com/TechUnRestricted/Kufar-Telegram-Notifier/blob/af75848093db0d21959128c56176e3ad2ae9bc29/Kufar%20Telegram%20Notifier/kufar.hpp#L25">номера областей</a> для поиска объявлений. <sup>(Опционально)</sup>
    </details>
