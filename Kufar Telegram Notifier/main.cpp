@@ -45,7 +45,7 @@ void loadJSONConfigurationData(const json &data, ProgramConfiguration &programCo
             if (query.contains("tag")) {
                 kufarConfiguration.tag = query.at("tag");
             } else {
-                cout << "[CRITICAL ERROR]: Tag field is empty at [" << index << "] position." << endl;
+                cout << "[КРИТИЧЕСКАЯ ОШИБКА]: Отсутствует название для поиска объявлений (tag) на позиции [" << index << "]." << endl;
                 exit(1);
             }
             
@@ -59,7 +59,10 @@ void loadJSONConfigurationData(const json &data, ProgramConfiguration &programCo
             
             kufarConfiguration.language = get_at_optional<string>(query, "language");
             kufarConfiguration.limit = get_at_optional<int>(query, "limit");
-            kufarConfiguration.region = get_at_optional<int>(query, "region");
+            kufarConfiguration.currency = get_at_optional<string>(query, "currency");
+            kufarConfiguration.condition = get_at_optional<ItemCondition>(query, "condition");
+            kufarConfiguration.sellerType = get_at_optional<SellerType>(query, "seller-type");
+            kufarConfiguration.region = get_at_optional<Region>(query, "region");
             kufarConfiguration.areas = get_at_optional<vector<int>>(query, "areas");
             programConfiguration.kufarConfiguration.push_back(kufarConfiguration);
             
@@ -78,25 +81,41 @@ void loadJSONConfigurationData(const json &data, ProgramConfiguration &programCo
 void printJSONConfigurationData(const ProgramConfiguration &programConfiguration) {
     cout <<
     "- Telegram:\n"
-        "\t- Token: " << programConfiguration.telegramConfiguration.botToken << "\n"
-        "\t- Chat ID: " << programConfiguration.telegramConfiguration.chatID << "\n\n"
-    "- Queries:\n\n";
+        "\t- Токен: " << programConfiguration.telegramConfiguration.botToken << "\n"
+        "\t- ID Чата: " << programConfiguration.telegramConfiguration.chatID << "\n\n"
+    "- Запросы:\n";
     
     for (const auto &query : programConfiguration.kufarConfiguration) {
         cout <<
-        "\t- Tag: " << query.tag << "\n"
-        "\t- Only Title Search: " << query.onlyTitleSearch << "\n"
-        "\t- Price:\n"
-            "\t\t- Min: " << query.priceRange.priceMin << " BYN\n"
-            "\t\t- Max: " << query.priceRange.priceMax << " BYN\n"
-        "\t- Language: " << query.language << "\n"
-        "\t- Limit: " << query.limit << "\n"
-        "\t- Region: " << query.region << "\n"
-        "\t- Areas: ";
+        "\t- Название: " << query.tag << "\n"
+        "\t- Поиск только по заголовку: " << (query.onlyTitleSearch.has_value() ? EnumString::boolean(query.onlyTitleSearch.value()) : PROPERTY_UNDEFINED) << "\n"
+        "\t- Цена:\n"
+            "\t\t- Минимальная: " << query.priceRange.priceMin << " BYN\n"
+            "\t\t- Максимальная: " << query.priceRange.priceMax << " BYN\n"
+        "\t- Язык: " << query.language << "\n"
+        "\t- Макс. кол-во объявлений за один запрос: " << query.limit << "\n"
+        "\t- Валюта: " << query.currency << "\n"
+        
+        "\t- Состояние: " << (query.condition.has_value() ?
+             EnumString::itemCondition(query.condition.value()) : PROPERTY_UNDEFINED) << "\n"
+        
+        "\t- Продавец: " << (query.sellerType.has_value() ?
+             EnumString::sellerType(query.sellerType.value()) : PROPERTY_UNDEFINED) << "\n"
+        
+        "\t- Город: " << (query.region.has_value() ? EnumString::region(query.region.value()) : PROPERTY_UNDEFINED)<< "\n"
+        
+        "\t- Район: ";
         
         if (query.areas.has_value()) {
+            unsigned int currentIndex = 0;
+            const uint64_t &vectorSize = query.areas.value().size();
+            
             for (const auto &area : query.areas.value()){
-                cout << area << ' ';
+                cout << EnumString::area(area);
+                
+                if (currentIndex++ < vectorSize - 1) {
+                    cout << ", ";
+                }
             }
         } else {
             cout << PROPERTY_UNDEFINED;
@@ -106,25 +125,35 @@ void printJSONConfigurationData(const ProgramConfiguration &programConfiguration
     }
     
     cout <<
-    "- Delays:\n"
-    "   - Query: " << programConfiguration.queryDelaySeconds << "\n"
-    "   - Loop: " << programConfiguration.loopDelaySeconds << endl;
+    "- Задержки:\n"
+    "   - Перед новым запросом: " << programConfiguration.queryDelaySeconds << "с. \n"
+    "   - После прохода всего списка запросов: " << programConfiguration.loopDelaySeconds << "c." << endl;
 }
 
 int main(int argc, char *argv[]) {    
     if (argc < 2){
-        cerr << "[ERROR]: No JSON file path passed!" << endl;
+        cerr << "[ОШИБКА]: JSON Файл конфигурации не был передан в аргументы программы!" << endl;
         exit(1);
     }
     
     string JSONPath = argv[1];
-    cout << "[Loading configuration]: " << '"' << JSONPath << '"' << endl;
+    cout << "[Загрузка файла конфигурации]: " << '"' << JSONPath << '"' << endl;
+    
+    if (!fileExists(JSONPath)){
+        cout << "[ОШИБКА]: Файл не существует по данному пути или к нему нет доступа." << endl;
+        exit(1);
+    }
+    
+    if (getFileSize(JSONPath) > 4000000) {
+        cout << "[ОШИБКА]: Размер файла превышает 4МБ." << endl;
+        exit(1);
+    }
     
     ProgramConfiguration programConfiguration;
     json data = json::parse(getTextFromFile(JSONPath));
     loadJSONConfigurationData(data, programConfiguration);
     printJSONConfigurationData(programConfiguration);
-    
+
     vector<int> viewedAds;
     while (true) {
         for (auto requestConfiguration : programConfiguration.kufarConfiguration) {

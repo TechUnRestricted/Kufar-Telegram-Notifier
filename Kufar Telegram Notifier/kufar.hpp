@@ -206,6 +206,16 @@ namespace Kufar {
 
         std::optional<std::string> joinPrice() const;
     };
+    
+	enum ItemCondition {
+        itemUsed = 1,
+        itemNew = 2
+    };
+
+    enum SellerType {
+        sellerIndividualPerson = 0,
+        sellerCompany = 1
+    };
 
     struct KufarConfiguration {
         std::string tag;                        // Default: [!ERROR!]
@@ -213,12 +223,22 @@ namespace Kufar {
         PriceRange priceRange = PriceRange();   // Default: [mixed-results]
         std::optional<std::string> language;    // Default: "ru"
         std::optional<int> limit;               // Default: 10
-        std::optional<int> region;              // Default: [undefined]
+        std::optional<std::string> currency;    // Default: [undefined]
+        std::optional<ItemCondition> condition; // Default: [undefined]
+        std::optional<SellerType> sellerType;   // Default: [undefined]
+        std::optional<Region> region;              // Default: [undefined]
         std::optional<std::vector<int>> areas;  // Default: [undefined]
     };
     
     std::vector<Ad> getAds(const KufarConfiguration &);
 
+    namespace EnumString {
+        std::string boolean(bool);
+        std::string itemCondition(ItemCondition);
+        std::string sellerType(SellerType);
+        std::string region(Region);
+        std::string area(int);
+    }
 };
 
 #endif /* kufar_hpp */

@@ -40,12 +40,12 @@ namespace Telegram {
         
         string text =
             "#" + ad.tag + "\n"
-            "Title: " + ad.title + "\n"
-            "Date: " + formattedTime + "\n"
-            "Price: " + to_string(ad.price / 100) + " BYN\n\n"
-            "Seller Name: " + ad.sellerName + "\n"
-            "Phone number is visible: " + (ad.phoneNumberIsVisible ? "Yes" : "No") + "\n"
-            "Link: " + ad.link;
+            "Название: " + ad.title + "\n"
+            "Дата: " + formattedTime + "\n"
+            "Цена: " + to_string(ad.price / 100) + " BYN\n\n"
+            "Имя продавца: " + ad.sellerName + "\n"
+            "Номер телефона не скрыт: " + (ad.phoneNumberIsVisible ? "Да" : "Нет") + "\n"
+            "Ссылка: " + ad.link;
         
         string url = "https://api.telegram.org/bot" + telegramConfiguration.botToken;
         if (!ad.images.empty()) {

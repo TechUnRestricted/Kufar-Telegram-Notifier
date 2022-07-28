@@ -54,6 +54,17 @@ std::ostream &operator << (std::ostream &os, std::optional<T> const &opt) {
 bool vectorContains(const std::vector<int> &, const int &);
 
 /**
+  Проверка на существование файла
+ */
+
+bool fileExists(const std::string &);
+
+/**
+  Возврат размера файла
+ */
+uint64_t getFileSize(const std::string &);
+
+/**
  Чтение файла и возврат
  содержимого в виде string.
  */

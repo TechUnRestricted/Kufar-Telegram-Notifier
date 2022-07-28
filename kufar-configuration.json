@@ -1,5 +1,5 @@
 {
-    "telegram":{
+    "telegram": {
         "bot-token": "1111111111:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
         "chat-id": 1111111111
     },
@@ -13,23 +13,29 @@
             },
             "language": "ru",
             "limit": 10,
+            "currency": "BYR",
+            "condition": 1,
+            "seller-type": 0,
             "region": 1,
             "areas": [
-                1, 37
+                1, 38, 4
             ]
         },
         {
-            "tag": "iPad",
-            "only-title-search": false,
+            "tag": "MacBook",
+            "only-title-search": true,
             "price": {
-                "min": 0,
-                "max": 1200
+                "min": 1000,
+                "max": 3800
             },
             "language": "ru",
-            "limit": 10,
-            "region": 1,
+            "limit": 5,
+            "currency": "BYR",
+            "condition": 2,
+            "seller-type": 0,
+            "region": 7,
             "areas": [
-                1, 37
+                22, 23, 24
             ]
         }
     ],

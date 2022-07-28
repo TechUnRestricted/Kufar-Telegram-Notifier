@@ -11,6 +11,7 @@
 #include <iomanip>
 #include <iterator>
 #include <algorithm>
+#include <filesystem>
 
 using namespace std;
 
@@ -19,6 +20,16 @@ bool vectorContains(const vector<int> &vector, const int &value) {
         return true;
     }
     return false;
+}
+
+bool fileExists(const string &path) {
+    ifstream f(path);
+    return f.good();
+}
+
+uint64_t getFileSize(const string &path) {
+    ifstream f(path, ios::binary | ios::ate);
+    return f.tellg();
 }
 
 string getTextFromFile(const string &path) {
