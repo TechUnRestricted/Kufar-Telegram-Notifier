@@ -35,6 +35,15 @@ namespace Kufar {
         
         return joinedPrice;
     }
+    
+    string getSortTypeUrlParameter(SortType sortType) {
+        switch (sortType) {
+            case SortType::descending:
+                return "prc.d";
+            case SortType::ascending:
+                return "prc.a";
+        }
+    }
 
     namespace {
         void insertImageURL (vector<string> &images, const string &id, const bool yams_storage) {
@@ -71,9 +80,16 @@ namespace Kufar {
         addURLParameter(urlStream, "size", configuration.limit);
         addURLParameter(urlStream, "prc", configuration.priceRange.joinPrice());
         addURLParameter(urlStream, "cur", configuration.currency);
-        addURLParameter(urlStream, "cnd", configuration.condition);
-        addURLParameter(urlStream, "cmp", configuration.sellerType);
+        addURLParameter(urlStream, "dle", configuration.kufarDeliveryRequired);
+        addURLParameter(urlStream, "sde", configuration.kufarPaymentRequired);
+        addURLParameter(urlStream, "hlv", configuration.kufarHalvaRequired);
+        addURLParameter(urlStream, "oph", configuration.onlyWithPhotos);
+        addURLParameter(urlStream, "ovi", configuration.onlyWithVideos);
+        addURLParameter(urlStream, "pse", configuration.exchangeIsPossible);
         
+        if (configuration.sortType.has_value()) { addURLParameter(urlStream, "sort", getSortTypeUrlParameter(configuration.sortType.value())); }
+        if (configuration.condition.has_value()) { addURLParameter(urlStream, "cnd", int(configuration.condition.value())); }
+        if (configuration.sellerType.has_value()) { addURLParameter(urlStream, "cmp", int(configuration.sellerType.value())); }
         if (configuration.region.has_value()) { addURLParameter(urlStream, "rgn", int(configuration.region.value())); }
         if (configuration.areas.has_value()) { addURLParameter(urlStream, "ar", "v.or:" + joinIntVector(configuration.areas.value(), ",")); }
             
@@ -115,24 +131,20 @@ namespace Kufar {
     }
 
     namespace EnumString {
-        /*
-         Brest = 1,
-         Gomel = 2,
-         Grodno = 3,
-         Mogilev = 4,
-         Minsk_Region = 5,
-         Vitebsk = 6,
-         Minsk = 7
-         */
-        string boolean(bool value) {
-            return value ? "Да" : "Нет";
+        string sortType(SortType sortType) {
+            switch (sortType) {
+                case SortType::descending:
+                    return "По убыванию";
+                case SortType::ascending:
+                    return "По возрастанию";
+            }
         }
-    
+        
         string itemCondition(ItemCondition itemCondition) {
             switch (itemCondition) {
-                case itemNew:
+                case ItemCondition::_new:
                     return "Новое";
-                case itemUsed:
+                case ItemCondition::used:
                     return "Б/У";
                 default:
                     return "[Неизвестный тип]";
@@ -141,9 +153,9 @@ namespace Kufar {
     
         string sellerType(SellerType sellerType) {
             switch (sellerType) {
-                case sellerIndividualPerson:
+                case SellerType::individualPerson:
                     return "Частное лицо";
-                case sellerCompany:
+                case SellerType::company:
                     return "Компания";
                 default:
                     return "[Неизвестный тип]";

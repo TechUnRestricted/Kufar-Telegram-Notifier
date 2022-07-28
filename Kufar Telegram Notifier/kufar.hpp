@@ -207,33 +207,46 @@ namespace Kufar {
         std::optional<std::string> joinPrice() const;
     };
     
-	enum ItemCondition {
-        itemUsed = 1,
-        itemNew = 2
+	enum class ItemCondition {
+        used = 1,
+        _new = 2
     };
 
-    enum SellerType {
-        sellerIndividualPerson = 0,
-        sellerCompany = 1
+    enum class SellerType {
+        individualPerson = 0,
+        company = 1
+    };
+
+    enum class SortType {
+        descending = 1,
+        ascending = 2
     };
 
     struct KufarConfiguration {
-        std::string tag;                        // Default: [!ERROR!]
-        std::optional<bool> onlyTitleSearch;    // Default: true
-        PriceRange priceRange = PriceRange();   // Default: [mixed-results]
-        std::optional<std::string> language;    // Default: "ru"
-        std::optional<int> limit;               // Default: 10
-        std::optional<std::string> currency;    // Default: [undefined]
-        std::optional<ItemCondition> condition; // Default: [undefined]
-        std::optional<SellerType> sellerType;   // Default: [undefined]
-        std::optional<Region> region;              // Default: [undefined]
-        std::optional<std::vector<int>> areas;  // Default: [undefined]
+        std::string tag;                                // Default: [!ERROR!]
+        std::optional<bool> onlyTitleSearch;            // Default: true
+        PriceRange priceRange = PriceRange();           // Default: [mixed-results]
+        std::optional<std::string> language;            // Default: "ru"
+        std::optional<int> limit;                       // Default: 10
+        std::optional<std::string> currency;            // Default: [undefined]
+        std::optional<ItemCondition> condition;         // Default: [undefined]
+        std::optional<SellerType> sellerType;           // Default: [undefined]
+        std::optional<bool> kufarDeliveryRequired;      // Default: [undefined]
+        std::optional<bool> kufarPaymentRequired;       // Default: [undefined]
+        std::optional<bool> kufarHalvaRequired;         // Default: [undefined]
+        std::optional<bool> onlyWithPhotos;             // Default: [undefined]
+        std::optional<bool> onlyWithVideos;             // Default: [undefined]
+        std::optional<bool> exchangeIsPossible;         // Default: [undefined]
+        std::optional<SortType> sortType;               // Default: [undefined]
+
+        std::optional<Region> region;                   // Default: [undefined]
+        std::optional<std::vector<int>> areas;          // Default: [undefined]
     };
     
     std::vector<Ad> getAds(const KufarConfiguration &);
 
     namespace EnumString {
-        std::string boolean(bool);
+        std::string sortType(SortType);
         std::string itemCondition(ItemCondition);
         std::string sellerType(SellerType);
         std::string region(Region);

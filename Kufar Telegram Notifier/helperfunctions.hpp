@@ -45,8 +45,15 @@ std::optional<T> get_at_optional(const nlohmann::json &obj, const std::string &k
 
 template<typename T>
 std::ostream &operator << (std::ostream &os, std::optional<T> const &opt) {
-    return opt ? (os << opt.value()) : (os << PROPERTY_UNDEFINED);
+    if (opt.has_value()) {
+        if constexpr (std::is_same_v<T, bool>) {
+            return (os << (opt.value() == true ? "Да" : "Нет"));
+        }
+        return (os << opt.value());
+    }
+    return (os << PROPERTY_UNDEFINED);
 }
+
 
 /**
   Проверка вектора на наличие заданного значения

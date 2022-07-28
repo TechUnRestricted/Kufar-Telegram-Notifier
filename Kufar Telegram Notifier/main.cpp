@@ -62,6 +62,14 @@ void loadJSONConfigurationData(const json &data, ProgramConfiguration &programCo
             kufarConfiguration.currency = get_at_optional<string>(query, "currency");
             kufarConfiguration.condition = get_at_optional<ItemCondition>(query, "condition");
             kufarConfiguration.sellerType = get_at_optional<SellerType>(query, "seller-type");
+            kufarConfiguration.kufarDeliveryRequired = get_at_optional<bool>(query, "kufar-delivery-required");
+            kufarConfiguration.kufarPaymentRequired = get_at_optional<bool>(query, "kufar-payment-required");
+            kufarConfiguration.kufarHalvaRequired = get_at_optional<bool>(query, "kufar-halva-required");
+            kufarConfiguration.onlyWithPhotos = get_at_optional<bool>(query, "only-with-photos");
+            kufarConfiguration.onlyWithVideos = get_at_optional<bool>(query, "only-with-videos");
+            kufarConfiguration.exchangeIsPossible = get_at_optional<bool>(query, "exchange-is-possible");
+            kufarConfiguration.sortType = get_at_optional<SortType>(query, "sort-type");
+
             kufarConfiguration.region = get_at_optional<Region>(query, "region");
             kufarConfiguration.areas = get_at_optional<vector<int>>(query, "areas");
             programConfiguration.kufarConfiguration.push_back(kufarConfiguration);
@@ -88,7 +96,7 @@ void printJSONConfigurationData(const ProgramConfiguration &programConfiguration
     for (const auto &query : programConfiguration.kufarConfiguration) {
         cout <<
         "\t- Название: " << query.tag << "\n"
-        "\t- Поиск только по заголовку: " << (query.onlyTitleSearch.has_value() ? EnumString::boolean(query.onlyTitleSearch.value()) : PROPERTY_UNDEFINED) << "\n"
+        "\t- Поиск только по заголовку: " << query.onlyTitleSearch << "\n"
         "\t- Цена:\n"
             "\t\t- Минимальная: " << query.priceRange.priceMin << " BYN\n"
             "\t\t- Максимальная: " << query.priceRange.priceMax << " BYN\n"
@@ -102,6 +110,16 @@ void printJSONConfigurationData(const ProgramConfiguration &programConfiguration
         "\t- Продавец: " << (query.sellerType.has_value() ?
              EnumString::sellerType(query.sellerType.value()) : PROPERTY_UNDEFINED) << "\n"
         
+        "\t- Только с Kufar Доставкой: " << query.kufarDeliveryRequired << "\n"
+        "\t- Только с Kufar Оплатой: " << query.kufarPaymentRequired << "\n"
+        
+        
+        "\t- Только с Kufar Рассрочкой (Халва): " << query.kufarPaymentRequired << "\n"
+        "\t- Только с фото: " << query.onlyWithPhotos << "\n"
+        "\t- Только с видео: " << query.onlyWithVideos << "\n"
+        "\t- Возможен обмен: " << query.exchangeIsPossible << "\n"
+        "\t- Тип сортировки: " << (query.sortType.has_value() ? EnumString::sortType(query.sortType.value()) : PROPERTY_UNDEFINED) << "\n"
+
         "\t- Город: " << (query.region.has_value() ? EnumString::region(query.region.value()) : PROPERTY_UNDEFINED)<< "\n"
         
         "\t- Район: ";
@@ -153,7 +171,6 @@ int main(int argc, char *argv[]) {
     json data = json::parse(getTextFromFile(JSONPath));
     loadJSONConfigurationData(data, programConfiguration);
     printJSONConfigurationData(programConfiguration);
-
     vector<int> viewedAds;
     while (true) {
         for (auto requestConfiguration : programConfiguration.kufarConfiguration) {
