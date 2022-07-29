@@ -62,11 +62,18 @@ namespace Kufar {
             }
         }
         
+        void addURLParameterBoolean(ostringstream &ostream, const string &parameter, const optional<bool> &value, const bool encodeValue = false) {
+            if (value.has_value() && value.value() == true) {
+                addURLParameter(ostream, parameter, to_string(value.value()), encodeValue);
+            }
+        }
+    
         void addURLParameter(ostringstream &ostream, const string &parameter, const optional<int> &value, const bool encodeValue = false) {
             if (value.has_value()) {
                 addURLParameter(ostream, parameter, to_string(value.value()), encodeValue);
             }
         }
+    
     }
 
     vector<Ad> getAds(const KufarConfiguration &configuration) {
@@ -76,20 +83,20 @@ namespace Kufar {
         
         addURLParameter(urlStream, "query", configuration.tag, true);
         addURLParameter(urlStream, "lang", configuration.language);
-        addURLParameter(urlStream, "ot", configuration.onlyTitleSearch);
+        addURLParameterBoolean(urlStream, "ot", configuration.onlyTitleSearch);
         addURLParameter(urlStream, "size", configuration.limit);
         addURLParameter(urlStream, "prc", configuration.priceRange.joinPrice());
         addURLParameter(urlStream, "cur", configuration.currency);
-        addURLParameter(urlStream, "dle", configuration.kufarDeliveryRequired);
-        addURLParameter(urlStream, "sde", configuration.kufarPaymentRequired);
-        addURLParameter(urlStream, "hlv", configuration.kufarHalvaRequired);
-        addURLParameter(urlStream, "oph", configuration.onlyWithPhotos);
-        addURLParameter(urlStream, "ovi", configuration.onlyWithVideos);
-        addURLParameter(urlStream, "pse", configuration.exchangeIsPossible);
+        addURLParameterBoolean(urlStream, "dle", configuration.kufarDeliveryRequired);
+        addURLParameterBoolean(urlStream, "sde", configuration.kufarPaymentRequired);
+        addURLParameterBoolean(urlStream, "hlv", configuration.kufarHalvaRequired);
+        addURLParameterBoolean(urlStream, "oph", configuration.onlyWithPhotos);
+        addURLParameterBoolean(urlStream, "ovi", configuration.onlyWithVideos);
+        addURLParameterBoolean(urlStream, "pse", configuration.onlyWithExchangeAvailable);
         
         if (configuration.sortType.has_value()) { addURLParameter(urlStream, "sort", getSortTypeUrlParameter(configuration.sortType.value())); }
         if (configuration.condition.has_value()) { addURLParameter(urlStream, "cnd", int(configuration.condition.value())); }
-        if (configuration.sellerType.has_value()) { addURLParameter(urlStream, "cmp", int(configuration.sellerType.value())); }
+        if (configuration.sellerType.has_value()) { addURLParameterBoolean(urlStream, "cmp", int(configuration.sellerType.value())); }
         if (configuration.region.has_value()) { addURLParameter(urlStream, "rgn", int(configuration.region.value())); }
         if (configuration.areas.has_value()) { addURLParameter(urlStream, "ar", "v.or:" + joinIntVector(configuration.areas.value(), ",")); }
             

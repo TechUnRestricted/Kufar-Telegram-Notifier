@@ -49,29 +49,29 @@ void loadJSONConfigurationData(const json &data, ProgramConfiguration &programCo
                 exit(1);
             }
             
-            kufarConfiguration.onlyTitleSearch = get_at_optional<bool>(query, "only-title-search");
+            kufarConfiguration.onlyTitleSearch = getOptionalValue<bool>(query, "only-title-search");
             
             if (query.contains("price")) {
                 json queryPriceData = query.at("price");
-                kufarConfiguration.priceRange.priceMin = get_at_optional<int>(queryPriceData, "min");
-                kufarConfiguration.priceRange.priceMax = get_at_optional<int>(queryPriceData, "max");
+                kufarConfiguration.priceRange.priceMin = getOptionalValue<int>(queryPriceData, "min");
+                kufarConfiguration.priceRange.priceMax = getOptionalValue<int>(queryPriceData, "max");
             }
             
-            kufarConfiguration.language = get_at_optional<string>(query, "language");
-            kufarConfiguration.limit = get_at_optional<int>(query, "limit");
-            kufarConfiguration.currency = get_at_optional<string>(query, "currency");
-            kufarConfiguration.condition = get_at_optional<ItemCondition>(query, "condition");
-            kufarConfiguration.sellerType = get_at_optional<SellerType>(query, "seller-type");
-            kufarConfiguration.kufarDeliveryRequired = get_at_optional<bool>(query, "kufar-delivery-required");
-            kufarConfiguration.kufarPaymentRequired = get_at_optional<bool>(query, "kufar-payment-required");
-            kufarConfiguration.kufarHalvaRequired = get_at_optional<bool>(query, "kufar-halva-required");
-            kufarConfiguration.onlyWithPhotos = get_at_optional<bool>(query, "only-with-photos");
-            kufarConfiguration.onlyWithVideos = get_at_optional<bool>(query, "only-with-videos");
-            kufarConfiguration.exchangeIsPossible = get_at_optional<bool>(query, "exchange-is-possible");
-            kufarConfiguration.sortType = get_at_optional<SortType>(query, "sort-type");
+            kufarConfiguration.language = getOptionalValue<string>(query, "language");
+            kufarConfiguration.limit = getOptionalValue<int>(query, "limit");
+            kufarConfiguration.currency = getOptionalValue<string>(query, "currency");
+            kufarConfiguration.condition = getOptionalValue<ItemCondition>(query, "condition");
+            kufarConfiguration.sellerType = getOptionalValue<SellerType>(query, "seller-type");
+            kufarConfiguration.kufarDeliveryRequired = getOptionalValue<bool>(query, "kufar-delivery-required");
+            kufarConfiguration.kufarPaymentRequired = getOptionalValue<bool>(query, "kufar-payment-required");
+            kufarConfiguration.kufarHalvaRequired = getOptionalValue<bool>(query, "kufar-halva-required");
+            kufarConfiguration.onlyWithPhotos = getOptionalValue<bool>(query, "only-with-photos");
+            kufarConfiguration.onlyWithVideos = getOptionalValue<bool>(query, "only-with-videos");
+            kufarConfiguration.onlyWithExchangeAvailable = getOptionalValue<bool>(query, "only-with-exchange-available");
+            kufarConfiguration.sortType = getOptionalValue<SortType>(query, "sort-type");
 
-            kufarConfiguration.region = get_at_optional<Region>(query, "region");
-            kufarConfiguration.areas = get_at_optional<vector<int>>(query, "areas");
+            kufarConfiguration.region = getOptionalValue<Region>(query, "region");
+            kufarConfiguration.areas = getOptionalValue<vector<int>>(query, "areas");
             programConfiguration.kufarConfiguration.push_back(kufarConfiguration);
             
             index += 1;
@@ -117,7 +117,7 @@ void printJSONConfigurationData(const ProgramConfiguration &programConfiguration
         "\t- Только с Kufar Рассрочкой (Халва): " << query.kufarPaymentRequired << "\n"
         "\t- Только с фото: " << query.onlyWithPhotos << "\n"
         "\t- Только с видео: " << query.onlyWithVideos << "\n"
-        "\t- Возможен обмен: " << query.exchangeIsPossible << "\n"
+        "\t- Только с возможностью обмена: " << query.onlyWithExchangeAvailable << "\n"
         "\t- Тип сортировки: " << (query.sortType.has_value() ? EnumString::sortType(query.sortType.value()) : PROPERTY_UNDEFINED) << "\n"
 
         "\t- Город: " << (query.region.has_value() ? EnumString::region(query.region.value()) : PROPERTY_UNDEFINED)<< "\n"

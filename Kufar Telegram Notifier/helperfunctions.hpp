@@ -31,7 +31,7 @@ static const std::string PROPERTY_UNDEFINED = "[UNDEFINED]";
  */
 
 template<typename T>
-std::optional<T> get_at_optional(const nlohmann::json &obj, const std::string &key) try {
+std::optional<T> getOptionalValue(const nlohmann::json &obj, const std::string &key) try {
     return obj.at(key).get<T>();
 } catch (...) {
     return std::nullopt;
