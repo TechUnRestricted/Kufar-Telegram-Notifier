@@ -21,6 +21,9 @@ using namespace Kufar;
 using namespace Telegram;
 using nlohmann::json;
 
+const string CACHE_FILE_NAME = "cached-data.json";
+const string CONFIGURATION_FILE_NAME = "kufar-configuration.json";
+
 struct ProgramConfiguration {
     vector<KufarConfiguration> kufarConfiguration;
     TelegramConfiguration telegramConfiguration;
@@ -148,29 +151,66 @@ void printJSONConfigurationData(const ProgramConfiguration &programConfiguration
     "   - После прохода всего списка запросов: " << programConfiguration.loopDelaySeconds << "c." << endl;
 }
 
-int main(int argc, char *argv[]) {    
-    if (argc < 2){
-        cerr << "[ОШИБКА]: JSON Файл конфигурации не был передан в аргументы программы!" << endl;
-        exit(1);
-    }
-    
-    string JSONPath = argv[1];
-    cout << "[Загрузка файла конфигурации]: " << '"' << JSONPath << '"' << endl;
-    
-    if (!fileExists(JSONPath)){
+json getJSONDataFromPath(const string &JSONFilePath) {
+    cout << "[Загрузка файла конфигурации]: " << '"' << JSONFilePath << '"' << endl;
+
+    if (!fileExists(JSONFilePath)){
         cout << "[ОШИБКА]: Файл не существует по данному пути или к нему нет доступа." << endl;
         exit(1);
     }
     
-    if (getFileSize(JSONPath) > 4000000) {
+    if (getFileSize(JSONFilePath) > 4000000) {
         cout << "[ОШИБКА]: Размер файла превышает 4МБ." << endl;
         exit(1);
     }
+        
+    try {
+       json textFromFile = json::parse(getTextFromFile(JSONFilePath));
+       return textFromFile;
+    } catch (const exception &exc) {
+       cout << "[ОШИБКА]: Невозможно получить данные из файла " << '"' << JSONFilePath << '"' << endl;
+       cout << "::: " << exc.what() << " :::" << endl;
+       exit(1);
+    }
+
+}
+
+json getJSONData(const int &argsCount, char **args) {
     
+    /**
+      Загрузка файла конфигурации по пути,
+      переданном через аргументы запуска
+     */
+    
+    if (argsCount == 2) {
+        return getJSONDataFromPath(args[1]);
+    }
+    
+    if (argsCount < 2) {
+        optional<string> applicationDirectory = getWorkingDirectory();
+        
+        if (applicationDirectory.has_value()) {
+            string JSONFilePath = applicationDirectory.value() + PATH_SEPARATOR + CONFIGURATION_FILE_NAME;
+            
+            return getJSONDataFromPath(JSONFilePath);
+        } else {
+            cout << "[ОШИБКА]: Невозможно автоматически определить путь к текущей папке. Передайте файл конфигурации в виде аргумента." << endl;
+            exit(1);
+        }
+            
+    } else {
+        cout << "[ОШИБКА]: Передано слишком много аргументов." << endl;
+        exit(1);
+    }
+    return "";
+}
+
+int main(int argc, char **argv) {
+    json JSONData = getJSONData(argc, argv);
     ProgramConfiguration programConfiguration;
-    json data = json::parse(getTextFromFile(JSONPath));
-    loadJSONConfigurationData(data, programConfiguration);
+    loadJSONConfigurationData(JSONData, programConfiguration);
     printJSONConfigurationData(programConfiguration);
+
     vector<int> viewedAds;
     while (true) {
         for (auto requestConfiguration : programConfiguration.kufarConfiguration) {

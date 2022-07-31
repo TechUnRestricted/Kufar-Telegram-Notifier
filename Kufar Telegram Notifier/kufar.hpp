@@ -236,7 +236,7 @@ namespace Kufar {
         std::optional<bool> kufarHalvaRequired;         // Default: [undefined]
         std::optional<bool> onlyWithPhotos;             // Default: [undefined]
         std::optional<bool> onlyWithVideos;             // Default: [undefined]
-        std::optional<bool> onlyWithExchangeAvailable;         // Default: [undefined]
+        std::optional<bool> onlyWithExchangeAvailable;  // Default: [undefined]
         std::optional<SortType> sortType;               // Default: [undefined]
 
         std::optional<Region> region;                   // Default: [undefined]

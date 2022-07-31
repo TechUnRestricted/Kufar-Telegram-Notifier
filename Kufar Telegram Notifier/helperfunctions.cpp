@@ -12,6 +12,10 @@
 #include <iterator>
 #include <algorithm>
 #include <filesystem>
+#include <optional>
+#include <unistd.h>
+#include <limits.h>
+#include <iostream>
 
 using namespace std;
 
@@ -66,3 +70,33 @@ string joinIntVector(const vector<int> &nums, const string &delim) {
 time_t timestampShift(const time_t &timestamp, int shift) {
     return timestamp + (3600 * shift);
 }
+
+#ifdef __APPLE__
+    #include <mach-o/dyld.h>
+    optional<string> getWorkingDirectory() {
+        
+        /*char temp[PATH_MAX];
+        return (getcwd(temp, sizeof(temp)) ? std::string( temp ) : std::string("") );*/
+        char buffer[PATH_MAX];
+        uint32_t buffsize = PATH_MAX;
+        
+        
+        if (_NSGetExecutablePath(buffer, &buffsize) == 0) {
+            return ((filesystem::path)buffer).parent_path();
+        }
+        
+        return nullopt;
+    }
+#elif __linux__
+    #include <libgen.h>
+    #include <linux/limits.h>
+
+    optional<string> getWorkingDirectory() {
+        char result[PATH_MAX];
+        size_t count = readlink("/proc/self/exe", result, PATH_MAX);
+        if (count != -1) {
+            return dirname(result);
+        }
+        return nullopt;
+    }
+#endif

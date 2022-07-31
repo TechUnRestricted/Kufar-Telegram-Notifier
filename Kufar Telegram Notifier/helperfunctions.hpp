@@ -20,6 +20,12 @@
     #define DEBUG_MSG(str) do { } while ( false )
 #endif
 
+#if defined(WIN32) || defined(_WIN32)
+    #define PATH_SEPARATOR '\\'
+#else
+    #define PATH_SEPARATOR '/'
+#endif
+
 #include <optional>
 #include "json.hpp"
 
@@ -41,6 +47,10 @@ std::optional<T> getOptionalValue(const nlohmann::json &obj, const std::string &
  Вывод переменных опционального типа в удобном формате.
  Значение есть: *unwrapped optional*
  Значения нет: [UNDEFINED]
+ 
+ Если значение типа bool, то вывод будет следующего формата:
+ true:  Да
+ false: Нет
  */
 
 template<typename T>
@@ -53,7 +63,6 @@ std::ostream &operator << (std::ostream &os, std::optional<T> const &opt) {
     }
     return (os << PROPERTY_UNDEFINED);
 }
-
 
 /**
   Проверка вектора на наличие заданного значения
@@ -98,5 +107,11 @@ std::string joinIntVector(const std::vector<int> &, const std::string &);
  */
 
 time_t timestampShift(const time_t &, int);
+
+/**
+ Возвращает путь, откуда запущено приложение
+ Отдельно реализованы функции для macOS и Linux
+ */
+std::optional<std::string> getWorkingDirectory();
 
 #endif /* helperfunctions_hpp */
