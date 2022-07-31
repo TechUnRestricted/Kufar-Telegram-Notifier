@@ -109,6 +109,12 @@ std::string joinIntVector(const std::vector<int> &, const std::string &);
 time_t timestampShift(const time_t &, int);
 
 /**
+ Проверка string на наличие указанного префикса
+ */
+
+bool stringHasPrefix(const std::string &, const std::string &);
+
+/**
  Возвращает путь, откуда запущено приложение
  Отдельно реализованы функции для macOS и Linux
  */

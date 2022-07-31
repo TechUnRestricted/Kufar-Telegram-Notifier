@@ -24,9 +24,25 @@ using nlohmann::json;
 const string CACHE_FILE_NAME = "cached-data.json";
 const string CONFIGURATION_FILE_NAME = "kufar-configuration.json";
 
+struct ConfigurationFile {
+    string path;
+    json contents;
+};
+
+struct CacheFile {
+    string path;
+    json contents;
+};
+
+struct Files {
+    ConfigurationFile configuration;
+    CacheFile cache;
+};
+
 struct ProgramConfiguration {
     vector<KufarConfiguration> kufarConfiguration;
     TelegramConfiguration telegramConfiguration;
+    Files files;
     
     int queryDelaySeconds = 5;
     int loopDelaySeconds = 30;
@@ -152,7 +168,7 @@ void printJSONConfigurationData(const ProgramConfiguration &programConfiguration
 }
 
 json getJSONDataFromPath(const string &JSONFilePath) {
-    cout << "[Загрузка файла конфигурации]: " << '"' << JSONFilePath << '"' << endl;
+    cout << "[Загрузка файла]: " << '"' << JSONFilePath << '"' << endl;
 
     if (!fileExists(JSONFilePath)){
         cout << "[ОШИБКА]: Файл не существует по данному пути или к нему нет доступа." << endl;
@@ -175,40 +191,59 @@ json getJSONDataFromPath(const string &JSONFilePath) {
 
 }
 
-json getJSONData(const int &argsCount, char **args) {
+const string prefixConfigurationFile = "--config=";
+const string prefixCacheFile = "--cache=";
+
+Files getFiles(const int &argsCount, char **args) {
     
     /**
       Загрузка файла конфигурации по пути,
       переданном через аргументы запуска
      */
     
-    if (argsCount == 2) {
-        return getJSONDataFromPath(args[1]);
+    Files files;
+    
+    for (int i = 0; i < argsCount; i++){
+        string currentArgument = args[i];
+        
+        if(stringHasPrefix(currentArgument, prefixConfigurationFile)) {
+            currentArgument.erase(0, prefixConfigurationFile.length());
+            files.configuration.path = currentArgument;
+        } else if (stringHasPrefix(currentArgument, prefixCacheFile)) {
+            currentArgument.erase(0, prefixCacheFile.length());
+            files.cache.path = currentArgument;
+        }
+        
     }
     
-    if (argsCount < 2) {
+    if (files.configuration.path.empty() || files.cache.path.empty()) {
         optional<string> applicationDirectory = getWorkingDirectory();
         
-        if (applicationDirectory.has_value()) {
-            string JSONFilePath = applicationDirectory.value() + PATH_SEPARATOR + CONFIGURATION_FILE_NAME;
-            
-            return getJSONDataFromPath(JSONFilePath);
-        } else {
-            cout << "[ОШИБКА]: Невозможно автоматически определить путь к текущей папке. Передайте файл конфигурации в виде аргумента." << endl;
+        if (!applicationDirectory.has_value()) {
+            cout << "[ОШИБКА]: Невозможно автоматически определить путь к текущей папке. Передайте файл конфигурации/кеша в виде аргумента." << endl;
             exit(1);
         }
-            
-    } else {
-        cout << "[ОШИБКА]: Передано слишком много аргументов." << endl;
-        exit(1);
+        
+        if (files.configuration.path.empty()) {
+            files.configuration.path = applicationDirectory.value() + PATH_SEPARATOR + CONFIGURATION_FILE_NAME;
+        }
+        
+        if (files.cache.path.empty()) {
+            files.cache.path = applicationDirectory.value() + PATH_SEPARATOR + CACHE_FILE_NAME;
+        }
     }
-    return "";
+    
+    files.configuration.contents = getJSONDataFromPath(files.configuration.path);
+    files.cache.contents = getJSONDataFromPath(files.cache.path);
+    
+    return files;
 }
 
 int main(int argc, char **argv) {
-    json JSONData = getJSONData(argc, argv);
     ProgramConfiguration programConfiguration;
-    loadJSONConfigurationData(JSONData, programConfiguration);
+    programConfiguration.files = getFiles(argc, argv);
+    
+    loadJSONConfigurationData(programConfiguration.files.configuration.contents, programConfiguration);
     printJSONConfigurationData(programConfiguration);
 
     vector<int> viewedAds;

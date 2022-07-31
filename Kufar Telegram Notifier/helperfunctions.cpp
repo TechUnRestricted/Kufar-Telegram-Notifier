@@ -11,7 +11,6 @@
 #include <iomanip>
 #include <iterator>
 #include <algorithm>
-#include <filesystem>
 #include <optional>
 #include <unistd.h>
 #include <limits.h>
@@ -71,8 +70,14 @@ time_t timestampShift(const time_t &timestamp, int shift) {
     return timestamp + (3600 * shift);
 }
 
+bool stringHasPrefix(const string &originalString, const string &prefix) {
+    return originalString.rfind(prefix, 0) == 0;
+}
+
 #ifdef __APPLE__
     #include <mach-o/dyld.h>
+    #include <filesystem>
+
     optional<string> getWorkingDirectory() {
         
         /*char temp[PATH_MAX];
@@ -99,4 +104,6 @@ time_t timestampShift(const time_t &timestamp, int shift) {
         }
         return nullopt;
     }
+#else
+    optional<string> getWorkingDirectory() { return nullopt; }
 #endif
