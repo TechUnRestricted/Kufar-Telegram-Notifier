@@ -15,6 +15,7 @@
 #include <unistd.h>
 #include <limits.h>
 #include <iostream>
+#include <libgen.h>
 
 using namespace std;
 
@@ -74,26 +75,28 @@ bool stringHasPrefix(const string &originalString, const string &prefix) {
     return originalString.rfind(prefix, 0) == 0;
 }
 
+void saveFile(const string &path, const string &contents) {
+    // Перезапись файла [ВКЛ]
+    ofstream ofs(path, ofstream::trunc);
+    ofs << contents;
+    ofs.close();
+}
+
 #ifdef __APPLE__
     #include <mach-o/dyld.h>
     #include <filesystem>
 
     optional<string> getWorkingDirectory() {
-        
-        /*char temp[PATH_MAX];
-        return (getcwd(temp, sizeof(temp)) ? std::string( temp ) : std::string("") );*/
         char buffer[PATH_MAX];
         uint32_t buffsize = PATH_MAX;
         
-        
         if (_NSGetExecutablePath(buffer, &buffsize) == 0) {
-            return ((filesystem::path)buffer).parent_path();
+            return dirname(buffer);
         }
         
         return nullopt;
     }
 #elif __linux__
-    #include <libgen.h>
     #include <linux/limits.h>
 
     optional<string> getWorkingDirectory() {

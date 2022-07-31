@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <unistd.h>
+#include <signal.h>
 #include <fstream>
 #include <vector>
 
@@ -194,13 +195,13 @@ json getJSONDataFromPath(const string &JSONFilePath) {
 const string prefixConfigurationFile = "--config=";
 const string prefixCacheFile = "--cache=";
 
+/**
+  Загрузка файлов:
+  kufar-configuration.json,
+  cached-data.json
+ */
+
 Files getFiles(const int &argsCount, char **args) {
-    
-    /**
-      Загрузка файла конфигурации по пути,
-      переданном через аргументы запуска
-     */
-    
     Files files;
     
     for (int i = 0; i < argsCount; i++){
@@ -239,14 +240,33 @@ Files getFiles(const int &argsCount, char **args) {
     return files;
 }
 
+ProgramConfiguration programConfiguration;
+vector<int> viewedAds;
+
+void exitHandler() {
+    saveFile(programConfiguration.files.cache.path, ((json)viewedAds).dump());
+    exit(0);
+}
+
+void signalHandler(int sig) {
+    exitHandler();
+}
+
 int main(int argc, char **argv) {
-    ProgramConfiguration programConfiguration;
-    programConfiguration.files = getFiles(argc, argv);
+    struct sigaction sigIntHandler;
+    sigIntHandler.sa_handler = signalHandler;
+    sigemptyset(&sigIntHandler.sa_mask);
+    sigIntHandler.sa_flags = 0;
+    sigaction(SIGINT, &sigIntHandler, NULL);
+    atexit(exitHandler);
     
+    programConfiguration.files = getFiles(argc, argv);
+    cout << programConfiguration.files.cache.contents << endl;
     loadJSONConfigurationData(programConfiguration.files.configuration.contents, programConfiguration);
     printJSONConfigurationData(programConfiguration);
 
-    vector<int> viewedAds;
+    viewedAds = programConfiguration.files.cache.contents.get<vector<int>>();
+
     while (true) {
         for (auto requestConfiguration : programConfiguration.kufarConfiguration) {
             try {
