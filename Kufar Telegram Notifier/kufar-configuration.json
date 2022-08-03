@@ -7,6 +7,15 @@
         {
             "tag": "iPhone",
             "only-title-search": true,
+            "limit": 5,
+            "region": 7,
+            "areas": [
+                22, 23, 30
+            ]
+        },
+        {
+            "tag": "Телефон",
+            "only-title-search": false,
             "price": {
                 "min": 0,
                 "max": 800
@@ -16,26 +25,17 @@
             "currency": "BYR",
             "condition": 1,
             "seller-type": 0,
+            "kufar-delivery-required": false,
+            "kufar-payment-required": false,
+            "kufar-halva-required": false,
+            "only-with-photos": false,
+            "only-with-videos": false,
+            "only-with-exchange-available": false,
+            "sort-type": 2,
+            "category": 17010,
             "region": 1,
             "areas": [
                 1, 38, 4
-            ]
-        },
-        {
-            "tag": "MacBook",
-            "only-title-search": true,
-            "price": {
-                "min": 1000,
-                "max": 3800
-            },
-            "language": "ru",
-            "limit": 5,
-            "currency": "BYR",
-            "condition": 2,
-            "seller-type": 0,
-            "region": 7,
-            "areas": [
-                22, 23, 24
             ]
         }
     ],
