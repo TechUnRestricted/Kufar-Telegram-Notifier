@@ -89,7 +89,7 @@ void loadJSONConfigurationData(const json &data, ProgramConfiguration &programCo
             kufarConfiguration.onlyWithVideos = getOptionalValue<bool>(query, "only-with-videos");
             kufarConfiguration.onlyWithExchangeAvailable = getOptionalValue<bool>(query, "only-with-exchange-available");
             kufarConfiguration.sortType = getOptionalValue<SortType>(query, "sort-type");
-
+            kufarConfiguration.category = getOptionalValue<int>(query, "category");
             kufarConfiguration.region = getOptionalValue<Region>(query, "region");
             kufarConfiguration.areas = getOptionalValue<vector<int>>(query, "areas");
             programConfiguration.kufarConfiguration.push_back(kufarConfiguration);
@@ -139,6 +139,7 @@ void printJSONConfigurationData(const ProgramConfiguration &programConfiguration
         "\t- Только с видео: " << query.onlyWithVideos << "\n"
         "\t- Только с возможностью обмена: " << query.onlyWithExchangeAvailable << "\n"
         "\t- Тип сортировки: " << (query.sortType.has_value() ? EnumString::sortType(query.sortType.value()) : PROPERTY_UNDEFINED) << "\n"
+        "\t- Категория: " << query.category << "\n"
 
         "\t- Город: " << (query.region.has_value() ? EnumString::region(query.region.value()) : PROPERTY_UNDEFINED)<< "\n"
         
@@ -240,15 +241,18 @@ Files getFiles(const int &argsCount, char **args) {
     return files;
 }
 
+///TODO: Переделать эту часть для работы без глобальных переменных
 ProgramConfiguration programConfiguration;
 vector<int> viewedAds;
+int signalGlobal = 0;
 
 void exitHandler() {
     saveFile(programConfiguration.files.cache.path, ((json)viewedAds).dump());
-    exit(0);
+    exit(signalGlobal);
 }
 
 void signalHandler(int sig) {
+    signalGlobal = sig;
     exitHandler();
 }
 
@@ -261,7 +265,6 @@ int main(int argc, char **argv) {
     atexit(exitHandler);
     
     programConfiguration.files = getFiles(argc, argv);
-    cout << programConfiguration.files.cache.contents << endl;
     loadJSONConfigurationData(programConfiguration.files.configuration.contents, programConfiguration);
     printJSONConfigurationData(programConfiguration);
 

@@ -83,10 +83,12 @@ namespace Kufar {
         
         addURLParameter(urlStream, "query", configuration.tag, true);
         addURLParameter(urlStream, "lang", configuration.language);
-        addURLParameterBoolean(urlStream, "ot", configuration.onlyTitleSearch);
         addURLParameter(urlStream, "size", configuration.limit);
         addURLParameter(urlStream, "prc", configuration.priceRange.joinPrice());
         addURLParameter(urlStream, "cur", configuration.currency);
+        addURLParameter(urlStream, "cat", configuration.category);
+        
+        addURLParameterBoolean(urlStream, "ot", configuration.onlyTitleSearch);
         addURLParameterBoolean(urlStream, "dle", configuration.kufarDeliveryRequired);
         addURLParameterBoolean(urlStream, "sde", configuration.kufarPaymentRequired);
         addURLParameterBoolean(urlStream, "hlv", configuration.kufarHalvaRequired);
