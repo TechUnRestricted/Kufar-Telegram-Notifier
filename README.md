@@ -101,6 +101,14 @@
       <b>currency</b> - валюта <sup>(Опционально)</sup><br>
       <b>condition</b> - <a href="https://github.com/TechUnRestricted/Kufar-Telegram-Notifier/blob/b28c0cb73b8ff958d957fe98d7018fa475d196d0/Kufar%20Telegram%20Notifier/kufar.hpp#L210">состояние</a> (новое / б/y). <sup>(Опционально)</sup><br>
       <b>seller-type</b> - <a href="https://github.com/TechUnRestricted/Kufar-Telegram-Notifier/blob/b28c0cb73b8ff958d957fe98d7018fa475d196d0/Kufar%20Telegram%20Notifier/kufar.hpp#L215">тип продавца</a> (частное лицо / компания). <sup>(Опционально)</sup><br>
+      <b>kufar-delivery-required</b> - только с Kufar Доставкой. <sup>(Опционально)</sup><br>
+      <b>kufar-payment-required</b> - только с Kufar Оплатой. <sup>(Опционально)</sup><br>
+      <b>kufar-halva-required</b> - только с Kufar Рассрочкой (Халва). <sup>(Опционально)</sup><br>
+      <b>only-with-photos</b> - только с фото. <sup>(Опционально)</sup><br>
+      <b>only-with-videos</b> - только с видео. <sup>(Опционально)</sup><br>
+      <b>only-with-exchange-available</b> - только с возможностью обмена. <sup>(Опционально)</sup><br>
+      <b>sort-type</b> - <a href="https://github.com/TechUnRestricted/Kufar-Telegram-Notifier/blob/ee12da091884fa7ae62bac4688ae8e5784af4182/Kufar%20Telegram%20Notifier/kufar.hpp#L501">тип сортировки</a>. <sup>(Опционально)</sup><br>
+      <b>category</b> - <a href="https://github.com/TechUnRestricted/Kufar-Telegram-Notifier/blob/ee12da091884fa7ae62bac4688ae8e5784af4182/Kufar%20Telegram%20Notifier/kufar.hpp#L193">категория</a>. <sup>(Опционально)</sup><br>
       <b>region</b> - <a href="https://github.com/TechUnRestricted/Kufar-Telegram-Notifier/blob/af75848093db0d21959128c56176e3ad2ae9bc29/Kufar%20Telegram%20Notifier/kufar.hpp#L15">номер региона</a> для поиска объявлений. <sup>(Опционально)</sup><br>
       <b>areas</b> - <a href="https://github.com/TechUnRestricted/Kufar-Telegram-Notifier/blob/af75848093db0d21959128c56176e3ad2ae9bc29/Kufar%20Telegram%20Notifier/kufar.hpp#L25">номера областей</a> для поиска объявлений. <sup>(Опционально)</sup>
    </details>
@@ -112,8 +120,27 @@
       <b>loop</b> - задержка (в секундах) перед повторением поиска по очереди с начала.<br>
    </details>
 </details>
+<details>
+     <summary>
+         Настройка cached-data.json
+     </summary>
+Настраивать данный файл не нужно.<br>
+Достаточно убедиться в том, что он представляет из себя валидный JSON файл со структурой <code>[]</code> (массив).<br>
+Предназначение: хранит в себе идентификаторы отправленных объявлений для предотвращения повторной отправки при перезапуске программы.
+</details>
 <h2>Запуск:</h2>
-<code>./executable "/путь/к/kufar-configuration.json"</code>
+   <details>
+      <summary>
+         Вариант с указанием путей к файлам конфигурации и кеша.
+      </summary>
+      <code>./executable --config="/путь/к/kufar-configuration.json" --cache="/путь/к/cached-data.json"</code>
+   </details>
+   <details>
+      <summary>
+         Вариант с автоматическим поиском файлов конфигурации (kufar-configuration.json) и кеша (cached-data.json) в папке с программой.
+      </summary>
+      <code>./executable</code>
+   </details>
 <p align="center">
    <img src="https://user-images.githubusercontent.com/83237609/181288185-7f9c23b0-32bf-4a1a-a3fd-168ed38255e1.png"/>
 </p>
