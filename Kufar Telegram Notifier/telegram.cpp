@@ -38,14 +38,18 @@ namespace Telegram {
         string formattedTime = ctime(&ad.date);
         formattedTime.pop_back();
         
-        string text =
-            "#" + ad.tag + "\n"
-            "Название: " + ad.title + "\n"
-            "Дата: " + formattedTime + "\n"
-            "Цена: " + to_string(ad.price / 100) + " BYN\n\n"
-            "Имя продавца: " + ad.sellerName + "\n"
-            "Номер телефона не скрыт: " + (ad.phoneNumberIsVisible ? "Да" : "Нет") + "\n"
-            "Ссылка: " + ad.link;
+        string text = "";
+        
+        if (ad.tag.has_value()) {
+            text += "#" + ad.tag.value() + "\n";
+        }
+        
+        text += "Название: " + ad.title + "\n"
+                "Дата: " + formattedTime + "\n"
+                "Цена: " + to_string(ad.price / 100) + " BYN\n\n"
+                "Имя продавца: " + ad.sellerName + "\n"
+                "Номер телефона не скрыт: " + (ad.phoneNumberIsVisible ? "Да" : "Нет") + "\n"
+                "Ссылка: " + ad.link;
         
         string url = "https://api.telegram.org/bot" + telegramConfiguration.botToken;
         if (!ad.images.empty()) {

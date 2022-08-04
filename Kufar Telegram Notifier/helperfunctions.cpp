@@ -77,7 +77,7 @@ bool stringHasPrefix(const string &originalString, const string &prefix) {
 
 void saveFile(const string &path, const string &contents) {
     // Перезапись файла [ВКЛ]
-    cout << "[Сохранение идентификаторов отправленных объявлений]" << endl;
+    cout << "\n[Сохранение идентификаторов отправленных объявлений]" << endl;
     ofstream ofs(path, ofstream::trunc);
     ofs << contents;
     ofs.close();

@@ -62,15 +62,8 @@ void loadJSONConfigurationData(const json &data, ProgramConfiguration &programCo
         for (const json &query : queriesData) {
             KufarConfiguration kufarConfiguration;
             
-            if (query.contains("tag")) {
-                kufarConfiguration.tag = query.at("tag");
-            } else {
-                cout << "[КРИТИЧЕСКАЯ ОШИБКА]: Отсутствует название для поиска объявлений (tag) на позиции [" << index << "]." << endl;
-                exit(1);
-            }
-            
             kufarConfiguration.onlyTitleSearch = getOptionalValue<bool>(query, "only-title-search");
-            
+            kufarConfiguration.tag = getOptionalValue<string>(query, "tag");
             if (query.contains("price")) {
                 json queryPriceData = query.at("price");
                 kufarConfiguration.priceRange.priceMin = getOptionalValue<int>(queryPriceData, "min");
@@ -262,7 +255,7 @@ int main(int argc, char **argv) {
     sigemptyset(&sigIntHandler.sa_mask);
     sigIntHandler.sa_flags = 0;
     sigaction(SIGINT, &sigIntHandler, NULL);
-    atexit(exitHandler);
+    //atexit(exitHandler);
     
     programConfiguration.files = getFiles(argc, argv);
     loadJSONConfigurationData(programConfiguration.files.configuration.contents, programConfiguration);

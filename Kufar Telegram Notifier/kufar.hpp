@@ -470,7 +470,7 @@ namespace Kufar {
     };
 
     struct Ad {
-        std::string tag;
+        std::optional<std::string> tag;
         std::string title;
         int id;
         time_t date;
@@ -504,7 +504,7 @@ namespace Kufar {
     };
 
     struct KufarConfiguration {
-        std::string tag;                                // Default: [!ERROR!]
+        std::optional<std::string> tag;                 // Default: [undefined]
         std::optional<bool> onlyTitleSearch;            // Default: [undefined]
         PriceRange priceRange = PriceRange();           // Default: [undefined]
         std::optional<std::string> language;            // Default: [undefined]

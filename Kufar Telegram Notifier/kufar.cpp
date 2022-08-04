@@ -109,7 +109,10 @@ namespace Kufar {
         for (const auto &ad : ads) {
             Ad advert;
             
-            advert.tag = configuration.tag;
+            if (configuration.tag.has_value()) {
+                advert.tag = configuration.tag.value();
+            }
+            
             advert.title = ad.at("subject");
             advert.id = ad.at("ad_id");
             advert.date = timestampShift(zuluToTimestamp((string)ad.at("list_time")), 3);
