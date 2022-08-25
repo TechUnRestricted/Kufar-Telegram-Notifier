@@ -297,7 +297,7 @@ namespace Kufar {
         
         // Всё для детей и мам
         enum class AllForChildrenAndMothers {
-            сlothingUpTo1Year = 12010,                 // Одежда до 1 года
+            clothingUpTo1Year = 12010,                 // Одежда до 1 года
             clothesForGirls = 12140,                   // Одежда для девочек
             clothesForBoys = 12150,                    // Одежда для мальчиков
             accessoriesForChildren = 12170,            // Аксессуары для детей

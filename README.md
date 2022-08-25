@@ -3,7 +3,7 @@
 Использование данного бота предусматривается только для ознакомительных целей.<br><br>
 <pre>Если Вы являетесь администрацией Kufar и у Вас имеются претензии к данному проекту - обращайтесь в раздел «<i>Issues</i>» для обратной связи.</pre>
 <p align="center">
-   <img src="https://user-images.githubusercontent.com/83237609/180989226-ec24b7d5-63ea-4ed5-9830-dd40d27ee30d.png" width="600px"/>
+   <img src="https://user-images.githubusercontent.com/83237609/180989226-ec24b7d5-63ea-4ed5-9830-dd40d27ee30d.png" width="600"/>
 </p>
 <h2>Инструкция по сборке</h2>
 <details>
@@ -15,8 +15,10 @@
    <ol>
       <li>Установите g++: <code>sudo apt-get install g++</code></li>
       <li>
-         Установите curl: <code>sudo apt-get install curl libcurl4-gnutls-dev
-         </code>
+         Установите curl: <code>sudo apt-get install curl libcurl4-gnutls-dev</code>
+      </li>
+      <li>
+         Установите make и cmake: <code>sudo apt-get install make cmake</code>
       </li>
       <li>
          <a href="https://github.com/TechUnRestricted/Kufar-Telegram-Notifier/releases">Загрузите</a> исходный код последней версии программы:<br>
@@ -24,9 +26,12 @@
       <li>
          Распакуйте архив с исходным кодом программы
       </li>
-      <li>С помощью <code>cd</code> перейдите в директорию <i>Kufar Telegram Notifier</i>, где находятся .cpp/.hpp файлы
+      <li>С помощью <code>cd</code> перейдите в директорию <i>src</i>, где находятся .cpp файлы.
       </li>
-      <li>Соберите исполняемый файл с помощью: <code>g++ *.cpp -o executable -std=c++17 -lcurl</code></li>
+      <li>Соберите исполняемый файл с помощью:<br>
+            <code>cmake .</code><br>
+            <code>make</code>
+      </li>
    </ol>
 </details>
 <details>
@@ -60,14 +65,16 @@
             Установите Xcode Command Line Tools: <code>xcode-select —install</code>
          </li>
          <li>
-            <a href="https://github.com/TechUnRestricted/Kufar-Telegram-Notifier/releases">Загрузите</a> исходный код последней версии программы:<br>
+            <a href="https://github.com/TechUnRestricted/Kufar-Telegram-Notifier/releases">Загрузите</a> исходный код последней версии программы<br>
          </li>
          <li>
             Распакуйте архив с исходным кодом программы
          </li>
-         <li>С помощью <code>cd</code> перейдите в директорию <i>Kufar Telegram Notifier</i>, где находятся .cpp/.hpp файлы
-         </li>
-         <li>Соберите исполняемый файл с помощью: <code>g++ *.cpp -o executable -std=c++17 -lcurl</code></li>
+         <li>С помощью <code>cd</code> перейдите в директорию <i>src</i>, где находятся .cpp файлы.</li>
+        <li>Соберите исполняемый файл с помощью:<br>
+            <code>cmake .</code><br>
+            <code>make</code>
+        </li>
       </ol>
    </details>
 </details>
@@ -133,13 +140,13 @@
       <summary>
          Вариант с указанием путей к файлам конфигурации и кеша.
       </summary>
-      <code>./executable --config="/путь/к/kufar-configuration.json" --cache="/путь/к/cached-data.json"</code>
+      <code>bin/Kufar-Telegram-Notifier --config="/путь/к/kufar-configuration.json" --cache="/путь/к/cached-data.json"</code>
    </details>
    <details>
       <summary>
-         Вариант с автоматическим поиском файлов конфигурации (kufar-configuration.json) и кеша (cached-data.json) в папке с программой.
+         Вариант с автоматическим поиском файлов конфигурации (<code>kufar-configuration.json</code>) и кеша (<code>cached-data.json</code>) в папке с программой.<br><sup>(Необходимо поместить <code>kufar-configuration.json</code> и <code>cached-data.json</code> в папку с программой)</sup>
       </summary>
-      <code>./executable</code>
+      <code>bin/Kufar-Telegram-Notifier</code>
    </details>
 <p align="center">
    <img src="https://user-images.githubusercontent.com/83237609/181288185-7f9c23b0-32bf-4a1a-a3fd-168ed38255e1.png"/>

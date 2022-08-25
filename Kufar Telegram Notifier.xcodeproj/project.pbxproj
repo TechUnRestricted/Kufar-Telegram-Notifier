@@ -45,6 +45,7 @@
 		E2E25579289B77F300399D40 /* telegram.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = telegram.cpp; sourceTree = "<group>"; };
 		E2E2557A289B77F300399D40 /* networking.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = networking.cpp; sourceTree = "<group>"; };
 		E2E2557B289B77F300399D40 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		E2EFE1ED28B805B0006609DC /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,8 +64,10 @@
 			isa = PBXGroup;
 			children = (
 				E2E25571289B77F300399D40 /* src */,
+				E2EFE1EE28B8062D006609DC /* include */,
 				E26DCAAB289B78470006C690 /* kufar-configuration.json */,
 				E26DCAAD289B785E0006C690 /* cached-data.json */,
+				E2EFE1ED28B805B0006609DC /* .gitignore */,
 				E26DCAAE289B785F0006C690 /* CMakeLists.txt */,
 				E26DCAAC289B785E0006C690 /* LICENSE */,
 				E26DCAAF289B785F0006C690 /* README.md */,
@@ -93,17 +96,24 @@
 			isa = PBXGroup;
 			children = (
 				E2E25572289B77F300399D40 /* telegram.hpp */,
-				E2E25573289B77F300399D40 /* networking.hpp */,
-				E2E25574289B77F300399D40 /* json.hpp */,
 				E2E25575289B77F300399D40 /* kufar.cpp */,
-				E2E25576289B77F300399D40 /* helperfunctions.hpp */,
-				E2E25577289B77F300399D40 /* kufar.hpp */,
 				E2E25578289B77F300399D40 /* helperfunctions.cpp */,
 				E2E25579289B77F300399D40 /* telegram.cpp */,
 				E2E2557A289B77F300399D40 /* networking.cpp */,
 				E2E2557B289B77F300399D40 /* main.cpp */,
 			);
 			path = src;
+			sourceTree = "<group>";
+		};
+		E2EFE1EE28B8062D006609DC /* include */ = {
+			isa = PBXGroup;
+			children = (
+				E2E25573289B77F300399D40 /* networking.hpp */,
+				E2E25574289B77F300399D40 /* json.hpp */,
+				E2E25576289B77F300399D40 /* helperfunctions.hpp */,
+				E2E25577289B77F300399D40 /* kufar.hpp */,
+			);
+			path = include;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

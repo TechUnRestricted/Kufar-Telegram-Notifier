@@ -1,7 +1,3 @@
-
-# Created by https://www.toptal.com/developers/gitignore/api/c++,xcode,macos
-# Edit at https://www.toptal.com/developers/gitignore?templates=c++,xcode,macos
-
 ### C++ ###
 # Prerequisites
 *.d
@@ -85,4 +81,23 @@ xcuserdata/
 /*.gcno
 **/xcshareddata/WorkspaceSettings.xcsettings
 
-# End of https://www.toptal.com/developers/gitignore/api/c++,xcode,macos
+### CMake ###
+CMakeLists.txt.user
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Testing
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps
+
+### CMake Patch ###
+# External projects
+*-prefix/
+
+### Ignore bin folder
+bin/
+
