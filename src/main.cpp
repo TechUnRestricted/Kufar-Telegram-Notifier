@@ -82,7 +82,7 @@ void loadJSONConfigurationData(const json &data, ProgramConfiguration &programCo
             kufarConfiguration.onlyWithVideos = getOptionalValue<bool>(query, "only-with-videos");
             kufarConfiguration.onlyWithExchangeAvailable = getOptionalValue<bool>(query, "only-with-exchange-available");
             kufarConfiguration.sortType = getOptionalValue<SortType>(query, "sort-type");
-            kufarConfiguration.category = getOptionalValue<int>(query, "category");
+            kufarConfiguration.category = getOptionalValue<Category>(query, "category");
             kufarConfiguration.subCategory = getOptionalValue<int>(query, "sub-category");
             kufarConfiguration.region = getOptionalValue<Region>(query, "region");
             kufarConfiguration.areas = getOptionalValue<vector<int>>(query, "areas");
@@ -128,7 +128,8 @@ void printJSONConfigurationData(const ProgramConfiguration &programConfiguration
         "\t- Только с видео: " << query.onlyWithVideos << "\n"
         "\t- Только с возможностью обмена: " << query.onlyWithExchangeAvailable << "\n"
         "\t- Тип сортировки: " << (query.sortType.has_value() ? EnumString::sortType(query.sortType.value()) : PROPERTY_UNDEFINED) << "\n"
-        "\t- Категория: " << query.subCategory << "\n"
+        "\t- Категория: " << (query.category.has_value() ?
+                              EnumString::category(query.category.value()) : PROPERTY_UNDEFINED) << "\n"
         "\t- Подкатегория: " << query.subCategory << "\n"
         "\t- Город: " << (query.region.has_value() ? EnumString::region(query.region.value()) : PROPERTY_UNDEFINED)<< "\n"
         "\t- Район: ";

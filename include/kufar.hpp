@@ -543,7 +543,7 @@ namespace Kufar {
         std::optional<bool> onlyWithVideos;             // Default: [undefined]
         std::optional<bool> onlyWithExchangeAvailable;  // Default: [undefined]
         std::optional<SortType> sortType;               // Default: [undefined]
-        std::optional<int> category;                    // Default: [undefined]
+        std::optional<Category> category;               // Default: [undefined]
         std::optional<int> subCategory;                 // Default: [undefined]
         std::optional<Region> region;                   // Default: [undefined]
         std::optional<std::vector<int>> areas;          // Default: [undefined]
@@ -553,6 +553,7 @@ namespace Kufar {
 
     namespace EnumString {
         std::string sortType(SortType);
+        std::string category(Category);
         std::string itemCondition(ItemCondition);
         std::string sellerType(SellerType);
         std::string region(Region);

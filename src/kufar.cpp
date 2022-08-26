@@ -156,7 +156,56 @@ namespace Kufar {
                     return "[Неизвестный тип]";
             }
         }
-        
+            
+    	string category(Category _category) {
+            switch (_category) {
+                case Category::realEstate:
+                    return "Недвижимость";
+                case Category::carsAndTransport:
+                    return "Автомобили и транспорт";
+                case Category::householdAppliances:
+                    return "Бытовая техника";
+                case Category::computerEquipment:
+                    return "Компьютерная техника";
+                case Category::phonesAndTablets:
+                    return "Телефоны и планшеты";
+                case Category::electronics:
+                    return "Электроника";
+                case Category::womensWardrobe:
+                    return "Женский гардероб";
+                case Category::mensWardrobe:
+                    return "Мужской гардероб";
+                case Category::beautyAndHealth:
+                    return "Красота и здоровье";
+                case Category::allForChildrenAndMothers:
+                    return "Всё для детей и мам";
+                case Category::furniture:
+                    return "Мебель";
+                case Category::everythingForHome:
+                    return "Всё для дома";
+                case Category::repairAndBuilding:
+                    return "Ремонт и стройка";
+                case Category::garden:
+                    return "Сад и огород";
+                case Category::hobbiesSportsAndTourism:
+                    return "Хобби, спорт и туризм";
+                case Category::weddingAndHolidays:
+                    return "Свадьба и праздники";
+                case Category::animals:
+                    return "Животные";
+                case Category::readyBusinessAndEquipment:
+                    return "Готовый бизнес и оборудование";
+                case Category::job:
+                    return "Работа";
+                case Category::services:
+                    return "Услуги";
+                case Category::other:
+                    return "Прочее";
+                default:
+                    return "[Неизвестная категория]";
+            }
+    	}
+    
         string itemCondition(ItemCondition itemCondition) {
             switch (itemCondition) {
                 case ItemCondition::_new:
