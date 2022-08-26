@@ -189,8 +189,32 @@ namespace Kufar {
             Others = 36
         };
     };
+    
+    enum Category {
+        realEstate = 1000,                  // Недвижимость
+        carsAndTransport = 2000,            // Автомобили и транспорт
+        householdAppliances = 15000,        // Бытовая техника
+        computerEquipment = 16000,          // Компьютерная техника
+        phonesAndTablets = 17000,           // Телефоны и планшеты
+        electronics = 5000,                 // Электроника
+        womensWardrobe = 8000,              // Женский гардероб
+        mensWardrobe = 19000,               // Мужской гардероб
+        beautyAndHealth = 18000,            // Красота и здоровье
+        allForChildrenAndMothers = 12000,   // Всё для детей и мам
+        furniture = 21000,                  // Мебель
+        everythingForHome = 3000,           // Всё для дома
+        repairAndBuilding = 14000,          // Ремонт и стройка
+        garden = 10000,                     // Сад и огород
+        hobbiesSportsAndTourism = 4000,     // Хобби, спорт и туризм
+        weddingAndHolidays = 9000,          // Свадьба и праздники
+        animals = 11000,                    // Животные
+        readyBusinessAndEquipment = 20000,  // Готовый бизнес и оборудование
+        job = 6000,                         // Работа
+        services = 13000,                   // Услуги
+        other = 7000                        // Прочее
+    };
 
-    struct Categories {
+    struct SubCategories {
         
         // Недвижимость
         enum class RealEstate {
@@ -520,6 +544,7 @@ namespace Kufar {
         std::optional<bool> onlyWithExchangeAvailable;  // Default: [undefined]
         std::optional<SortType> sortType;               // Default: [undefined]
         std::optional<int> category;                    // Default: [undefined]
+        std::optional<int> subCategory;                 // Default: [undefined]
         std::optional<Region> region;                   // Default: [undefined]
         std::optional<std::vector<int>> areas;          // Default: [undefined]
     };

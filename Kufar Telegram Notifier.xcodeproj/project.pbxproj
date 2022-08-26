@@ -95,7 +95,6 @@
 		E2E25571289B77F300399D40 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				E2E25572289B77F300399D40 /* telegram.hpp */,
 				E2E25575289B77F300399D40 /* kufar.cpp */,
 				E2E25578289B77F300399D40 /* helperfunctions.cpp */,
 				E2E25579289B77F300399D40 /* telegram.cpp */,
@@ -108,10 +107,11 @@
 		E2EFE1EE28B8062D006609DC /* include */ = {
 			isa = PBXGroup;
 			children = (
+				E2E25577289B77F300399D40 /* kufar.hpp */,
+				E2E25576289B77F300399D40 /* helperfunctions.hpp */,
+				E2E25572289B77F300399D40 /* telegram.hpp */,
 				E2E25573289B77F300399D40 /* networking.hpp */,
 				E2E25574289B77F300399D40 /* json.hpp */,
-				E2E25576289B77F300399D40 /* helperfunctions.hpp */,
-				E2E25577289B77F300399D40 /* kufar.hpp */,
 			);
 			path = include;
 			sourceTree = "<group>";

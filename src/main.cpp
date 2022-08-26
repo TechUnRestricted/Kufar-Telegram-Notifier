@@ -83,6 +83,7 @@ void loadJSONConfigurationData(const json &data, ProgramConfiguration &programCo
             kufarConfiguration.onlyWithExchangeAvailable = getOptionalValue<bool>(query, "only-with-exchange-available");
             kufarConfiguration.sortType = getOptionalValue<SortType>(query, "sort-type");
             kufarConfiguration.category = getOptionalValue<int>(query, "category");
+            kufarConfiguration.subCategory = getOptionalValue<int>(query, "sub-category");
             kufarConfiguration.region = getOptionalValue<Region>(query, "region");
             kufarConfiguration.areas = getOptionalValue<vector<int>>(query, "areas");
             programConfiguration.kufarConfiguration.push_back(kufarConfiguration);
@@ -116,26 +117,20 @@ void printJSONConfigurationData(const ProgramConfiguration &programConfiguration
         "\t- Язык: " << query.language << "\n"
         "\t- Макс. кол-во объявлений за один запрос: " << query.limit << "\n"
         "\t- Валюта: " << query.currency << "\n"
-        
         "\t- Состояние: " << (query.condition.has_value() ?
              EnumString::itemCondition(query.condition.value()) : PROPERTY_UNDEFINED) << "\n"
-        
         "\t- Продавец: " << (query.sellerType.has_value() ?
              EnumString::sellerType(query.sellerType.value()) : PROPERTY_UNDEFINED) << "\n"
-        
         "\t- Только с Kufar Доставкой: " << query.kufarDeliveryRequired << "\n"
         "\t- Только с Kufar Оплатой: " << query.kufarPaymentRequired << "\n"
-        
-        
         "\t- Только с Kufar Рассрочкой (Халва): " << query.kufarPaymentRequired << "\n"
         "\t- Только с фото: " << query.onlyWithPhotos << "\n"
         "\t- Только с видео: " << query.onlyWithVideos << "\n"
         "\t- Только с возможностью обмена: " << query.onlyWithExchangeAvailable << "\n"
         "\t- Тип сортировки: " << (query.sortType.has_value() ? EnumString::sortType(query.sortType.value()) : PROPERTY_UNDEFINED) << "\n"
-        "\t- Категория: " << query.category << "\n"
-
+        "\t- Категория: " << query.subCategory << "\n"
+        "\t- Подкатегория: " << query.subCategory << "\n"
         "\t- Город: " << (query.region.has_value() ? EnumString::region(query.region.value()) : PROPERTY_UNDEFINED)<< "\n"
-        
         "\t- Район: ";
         
         if (query.areas.has_value()) {

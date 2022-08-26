@@ -93,7 +93,7 @@
       <summary>
          Queries
       </summary>
-      <b>tag</b> - поисковой запрос.<br>
+      <b>tag</b> - поисковой запрос. <sup>(Опционально)</sup><br>
       <b>only-title-search</b> - осуществление поиска только в заголовках. <sup>(Опционально)</sup>
       <details>
          <summary>

@@ -42,6 +42,9 @@ namespace Kufar {
                 return "prc.d";
             case SortType::ascending:
                 return "prc.a";
+            default:
+                // TODO: Передалать под возврат nullopt;
+                return "";
         }
     }
 
@@ -86,8 +89,9 @@ namespace Kufar {
         addURLParameter(urlStream, "size", configuration.limit);
         addURLParameter(urlStream, "prc", configuration.priceRange.joinPrice());
         addURLParameter(urlStream, "cur", configuration.currency);
-        addURLParameter(urlStream, "cat", configuration.category);
-        
+        addURLParameter(urlStream, "cat", configuration.subCategory);
+        addURLParameter(urlStream, "prn", configuration.category);
+
         addURLParameterBoolean(urlStream, "ot", configuration.onlyTitleSearch);
         addURLParameterBoolean(urlStream, "dle", configuration.kufarDeliveryRequired);
         addURLParameterBoolean(urlStream, "sde", configuration.kufarPaymentRequired);
@@ -138,7 +142,6 @@ namespace Kufar {
             adverts.push_back(advert);
         }
         
-        
         return adverts;
     }
 
@@ -149,6 +152,8 @@ namespace Kufar {
                     return "По убыванию";
                 case SortType::ascending:
                     return "По возрастанию";
+                default:
+                    return "[Неизвестный тип]";
             }
         }
         
@@ -159,7 +164,7 @@ namespace Kufar {
                 case ItemCondition::used:
                     return "Б/У";
                 default:
-                    return "[Неизвестный тип]";
+                    return "[Неизвестное состояние]";
             }
         }
     

@@ -32,7 +32,8 @@
             "only-with-videos": false,
             "only-with-exchange-available": false,
             "sort-type": 2,
-            "category": 17010,
+            "category": 1000,
+            "sub-category": 1030,
             "region": 1,
             "areas": [
                 1, 38, 4
