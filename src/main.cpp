@@ -158,8 +158,8 @@ void printJSONConfigurationData(const ProgramConfiguration &programConfiguration
     
     cout <<
     "- Задержки:\n"
-    "   - Перед новым запросом: " << programConfiguration.queryDelaySeconds << "с. \n"
-    "   - После прохода всего списка запросов: " << programConfiguration.loopDelaySeconds << "c." << endl;
+        "\t- Перед новым запросом: " << programConfiguration.queryDelaySeconds << "с. \n"
+        "\t- После прохода всего списка запросов: " << programConfiguration.loopDelaySeconds << "c." << endl;
 }
 
 json getJSONDataFromPath(const string &JSONFilePath) {
@@ -234,28 +234,9 @@ Files getFiles(const int &argsCount, char **args) {
     return files;
 }
 
-///TODO: Переделать эту часть для работы без глобальных переменных
-ProgramConfiguration programConfiguration;
-vector<int> viewedAds;
-int signalGlobal = 0;
-
-void exitHandler() {
-    saveFile(programConfiguration.files.cache.path, ((json)viewedAds).dump());
-    exit(signalGlobal);
-}
-
-void signalHandler(int sig) {
-    signalGlobal = sig;
-    exitHandler();
-}
-
 int main(int argc, char **argv) {
-    struct sigaction sigIntHandler;
-    sigIntHandler.sa_handler = signalHandler;
-    sigemptyset(&sigIntHandler.sa_mask);
-    sigIntHandler.sa_flags = 0;
-    sigaction(SIGINT, &sigIntHandler, NULL);
-    //atexit(exitHandler);
+    ProgramConfiguration programConfiguration;
+    vector<int> viewedAds;
     
     programConfiguration.files = getFiles(argc, argv);
     loadJSONConfigurationData(programConfiguration.files.configuration.contents, programConfiguration);
@@ -265,16 +246,21 @@ int main(int argc, char **argv) {
 
     while (true) {
         for (auto requestConfiguration : programConfiguration.kufarConfiguration) {
+            unsigned int sentCount = 0;
+            
             try {
                 for (const auto &advert : getAds(requestConfiguration)) {
                     if (!vectorContains(viewedAds, advert.id)) {
                         cout << "[New]: Adding [Title: " << advert.title << "], [ID: " << advert.id << "], [Tag: " << advert.tag << "], [Link: " << advert.link << "]" << endl;
                         viewedAds.push_back(advert.id);
+                        sentCount += 1;
+
                         try {
                             sendAdvert(programConfiguration.telegramConfiguration, advert);
                         } catch (const exception &exc) {
                             cerr << "[ERROR (sendAdvert)]: " << exc.what() << endl;
                         }
+                        
                     } else {
                         //cout << "[Already was!]" << endl;
                     }
@@ -285,6 +271,10 @@ int main(int argc, char **argv) {
             }
             DEBUG_MSG("[DEBUG]: " << "(QueryDelay) Sleeping for: " << programConfiguration.queryDelaySeconds << "s.");
             sleep(programConfiguration.queryDelaySeconds);
+            
+            if (sentCount > 0) {
+                saveFile(programConfiguration.files.cache.path, ((json)viewedAds).dump());
+            }
         }
         DEBUG_MSG("[DEBUG]: " << "(LoopDelay) Sleeping for: " << programConfiguration.loopDelaySeconds << "s.");
         sleep(programConfiguration.loopDelaySeconds);
