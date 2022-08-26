@@ -130,7 +130,7 @@ void printJSONConfigurationData(const ProgramConfiguration &programConfiguration
         "\t- Тип сортировки: " << (query.sortType.has_value() ? EnumString::sortType(query.sortType.value()) : PROPERTY_UNDEFINED) << "\n"
         "\t- Категория: " << (query.category.has_value() ?
                               EnumString::category(query.category.value()) : PROPERTY_UNDEFINED) << "\n"
-        "\t- Подкатегория: " << query.subCategory << "\n"
+        "\t- Подкатегория: " << (query.subCategory.has_value() ? EnumString::subCategory(query.subCategory.value()) : PROPERTY_UNDEFINED) << "\n"
         "\t- Город: " << (query.region.has_value() ? EnumString::region(query.region.value()) : PROPERTY_UNDEFINED)<< "\n"
         "\t- Район: ";
         

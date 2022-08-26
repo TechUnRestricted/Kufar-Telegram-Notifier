@@ -105,18 +105,19 @@
       <b>language</b> - язык. <sup>(Опционально)</sup><br>
       <b>limit</b> - ограничение на количество получаемых объявлений за один запрос. <sup>(Опционально)</sup><br>
       <b>currency</b> - валюта <sup>(Опционально)</sup><br>
-      <b>condition</b> - <a href="https://github.com/TechUnRestricted/Kufar-Telegram-Notifier/blob/b28c0cb73b8ff958d957fe98d7018fa475d196d0/Kufar%20Telegram%20Notifier/kufar.hpp#L210">состояние</a> (новое / б/y). <sup>(Опционально)</sup><br>
-      <b>seller-type</b> - <a href="https://github.com/TechUnRestricted/Kufar-Telegram-Notifier/blob/b28c0cb73b8ff958d957fe98d7018fa475d196d0/Kufar%20Telegram%20Notifier/kufar.hpp#L215">тип продавца</a> (частное лицо / компания). <sup>(Опционально)</sup><br>
+      <b>condition</b> - <a href="https://github.com/TechUnRestricted/Kufar-Telegram-Notifier/blob/4e5eb51e3664c5e4e96812a5e146e41087787484/include/kufar.hpp#L515">состояние</a> (новое / б/y). <sup>(Опционально)</sup><br>
+      <b>seller-type</b> - <a href="https://github.com/TechUnRestricted/Kufar-Telegram-Notifier/blob/4e5eb51e3664c5e4e96812a5e146e41087787484/include/kufar.hpp#L520">тип продавца</a> (частное лицо / компания). <sup>(Опционально)</sup><br>
       <b>kufar-delivery-required</b> - только с Kufar Доставкой. <sup>(Опционально)</sup><br>
       <b>kufar-payment-required</b> - только с Kufar Оплатой. <sup>(Опционально)</sup><br>
       <b>kufar-halva-required</b> - только с Kufar Рассрочкой (Халва). <sup>(Опционально)</sup><br>
       <b>only-with-photos</b> - только с фото. <sup>(Опционально)</sup><br>
       <b>only-with-videos</b> - только с видео. <sup>(Опционально)</sup><br>
       <b>only-with-exchange-available</b> - только с возможностью обмена. <sup>(Опционально)</sup><br>
-      <b>sort-type</b> - <a href="https://github.com/TechUnRestricted/Kufar-Telegram-Notifier/blob/ee12da091884fa7ae62bac4688ae8e5784af4182/Kufar%20Telegram%20Notifier/kufar.hpp#L501">тип сортировки</a>. <sup>(Опционально)</sup><br>
-      <b>category</b> - <a href="https://github.com/TechUnRestricted/Kufar-Telegram-Notifier/blob/ee12da091884fa7ae62bac4688ae8e5784af4182/Kufar%20Telegram%20Notifier/kufar.hpp#L193">категория</a>. <sup>(Опционально)</sup><br>
-      <b>region</b> - <a href="https://github.com/TechUnRestricted/Kufar-Telegram-Notifier/blob/af75848093db0d21959128c56176e3ad2ae9bc29/Kufar%20Telegram%20Notifier/kufar.hpp#L15">номер региона</a> для поиска объявлений. <sup>(Опционально)</sup><br>
-      <b>areas</b> - <a href="https://github.com/TechUnRestricted/Kufar-Telegram-Notifier/blob/af75848093db0d21959128c56176e3ad2ae9bc29/Kufar%20Telegram%20Notifier/kufar.hpp#L25">номера областей</a> для поиска объявлений. <sup>(Опционально)</sup>
+      <b>sort-type</b> - <a href="https://github.com/TechUnRestricted/Kufar-Telegram-Notifier/blob/4e5eb51e3664c5e4e96812a5e146e41087787484/include/kufar.hpp#L525">тип сортировки</a>. <sup>(Опционально)</sup><br>
+      <b>category</b> - <a href="https://github.com/TechUnRestricted/Kufar-Telegram-Notifier/blob/4e5eb51e3664c5e4e96812a5e146e41087787484/include/kufar.hpp#L193">категория</a>. <sup>(Опционально)</sup><br>
+      <b>sub-category</b> - <a href="https://github.com/TechUnRestricted/Kufar-Telegram-Notifier/blob/4e5eb51e3664c5e4e96812a5e146e41087787484/include/kufar.hpp#L217">подкатегория</a>. <sup>(Опционально)</sup><br>
+      <b>region</b> - <a href="https://github.com/TechUnRestricted/Kufar-Telegram-Notifier/blob/4e5eb51e3664c5e4e96812a5e146e41087787484/include/kufar.hpp#L17">номер региона</a> для поиска объявлений. <sup>(Опционально)</sup><br>
+      <b>areas</b> - <a href="https://github.com/TechUnRestricted/Kufar-Telegram-Notifier/blob/4e5eb51e3664c5e4e96812a5e146e41087787484/include/kufar.hpp#L27">номера областей</a> для поиска объявлений. <sup>(Опционально)</sup>
    </details>
    <details>
       <summary>

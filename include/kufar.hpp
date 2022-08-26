@@ -375,22 +375,22 @@ namespace Kufar {
         };
         
         // Ремонт и стройка
-        enum class RepairAndBuilding {                 // Строительный инструмент
-            constructionTools = 14010,                 // Строительное оборудование
-            constructionEquipment = 14180,             // Сантехника и отопление
-            plumbingAndHeating = 14020,                // Стройматериалы
-            buildingMaterials = 14030,                 // Отделочные материалы
-            finishingMaterials = 14040,                // Окна и двери
-            windowsAndDoors = 14050,                   // Дома, срубы и сооружения
-            housesLogCabinsAndStructures = 14080,      // Ворота, заборы
-            gatesFences = 14090,                       // Электроснабжение
-            powerSupply = 14100,                       // Средства индивидуальной защиты
-            personalProtectiveEquipment = 14190,       // Прочее для ремонта и стройки
-            otherForRepairAndConstruction = 14060      // Строительный инструмент
+        enum class RepairAndBuilding {
+            constructionTools = 14010,                // Строительный инструмент
+            constructionEquipment = 14180,            // Строительное оборудование
+            plumbingAndHeating = 14020,               // Сантехника и отопление
+            buildingMaterials = 14030,                // Стройматериалы
+            finishingMaterials = 14040,               // Отделочные материалы
+            windowsAndDoors = 14050,                  // Окна и двери
+            housesLogCabinsAndStructures = 14080,     // Дома, срубы и сооружения
+            gatesFences = 14090,                      // Ворота, заборы
+            powerSupply = 14100,                      // Электроснабжение
+            personalProtectiveEquipment = 14190,      // Средства индивидуальной защит
+            otherForRepairAndConstruction = 14060     // Прочее для ремонта и стройки
         };
         
         // Сад и огород
-        enum Garden {
+        enum class Garden {
             gardenFurnitureAndSwimmingPools = 10010,   // Садовая мебель и бассейны
             barbecuesAccessoriesFuel = 10100,          // Мангалы, аксессуары, топливо
             tillersAndCultivators = 10110,             // Мотоблоки и культиваторы
@@ -405,7 +405,7 @@ namespace Kufar {
         };
         
         // Хобби, спорт и туризм
-        enum HobbiesSportsAndTourism {
+        enum class HobbiesSportsAndTourism {
             CDDVDRecords = 4010,                       // CD, DVD, пластинки
             antiquesAndCollections = 4030,             // Антиквариат и коллекции
             tickets = 4120,                            // Билеты
@@ -425,7 +425,7 @@ namespace Kufar {
         };
         
         // Свадьба и праздники
-        enum WeddingAndHolidays {
+        enum class WeddingAndHolidays {
             weddingDresses = 9020,                     // Свадебные платья
             weddingCostumes = 9030,                    // Свадебные костюмы
             weddingShoes = 9040,                       // Свадебная обувь
@@ -558,6 +558,7 @@ namespace Kufar {
         std::string sellerType(SellerType);
         std::string region(Region);
         std::string area(int);
+        std::string subCategory(int);
     }
 };
 
